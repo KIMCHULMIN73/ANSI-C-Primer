@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 	int count = 0;
 	
 	puts("Enter an integer");
-	gets(number);
+	fgets(number,SIZE,stdin);
 	
 	if (number[SIZE-1] != '\0') {
 		puts("Too many digit.");
