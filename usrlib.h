@@ -7,10 +7,11 @@
 #include <math.h>
 #include <ctype.h>
 
-#define INT_LENGTH	81
-#define STR_LENGTH	1501
+#define INT_LENGTH	128
+#define STR_LENGTH	1024
 
 #define STOP		-1
+
 #define YES_NUM		0
 #define NO_NUM		1
 

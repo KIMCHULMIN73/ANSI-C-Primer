@@ -1,3 +1,13 @@
+/******************************************
+ **                                      **
+ **           ascii to integer           **
+ **                                      **
+ ******************************************
+ **                atoi.c                **
+ ******************************************
+ **          kimchulmin, 2026.4          **
+ ******************************************/
+
 #include "./usrlib.h"
 
 #define issign(c)	( (c) == '-' || (c) == '+' ) ? (1) : (0)
@@ -7,11 +17,11 @@
 
 int main(int argc, char *argv[])
 {
-	char ch;
-	static char number[SIZE];
-	int value;
-	int digit = YES;
-	int count = 0;
+  char ch;
+  static char number[SIZE];
+  int value;
+  int digit = YES;
+  int count = 0;
 	
 	puts("Enter an integer");
 	fgets(number,SIZE,stdin);
