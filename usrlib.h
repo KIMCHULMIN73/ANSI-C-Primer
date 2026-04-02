@@ -1,3 +1,14 @@
+/******************************************
+ **                                      **
+ **             user library             **
+ **                                      **
+ ******************************************
+ **               usrlib.h               **
+ ******************************************
+ **          kimchulmin, 2026.4          **
+ ******************************************/
+ 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -41,7 +52,16 @@ int getint(int *pint);
 int str2int(char *intarray, int *pint);
 int int2str(int number, char* num_str);
 void getstring(FILE *file, char string[]);
-int getstr(FILE *file, char *string);
+int getstr(FILE *file, char *string);/******************************************
+ **                                      **
+ **             user library             **
+ **                                      **
+ ******************************************
+ **               usrlib.c               **
+ ******************************************
+ **          kimchulmin, 2026.4          **
+ ******************************************/
+ 
 int putstr(FILE *file, char *string);
 int strlength(char sl[]);
 int getintarray(int pNumber[], int size);
