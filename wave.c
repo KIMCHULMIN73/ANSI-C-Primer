@@ -1,3 +1,13 @@
+/******************************************
+ **                                      **
+ **           test switch-case           **
+ **                                      **
+ ******************************************
+ **                wave.c                **
+ ******************************************
+ **          kimchulmin, 2026.4          **
+ ******************************************/
+ 
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,12 +16,12 @@
 void main(void)
 {
     int numin;
-    
-    printf("Input your number :");
-    
+        
     while (1)
     {
+		printf("Input your number(1~9) :");
 		scanf("%d", &numin);
+		
 		switch (numin)
 		{
 			case 1 : printf("first");

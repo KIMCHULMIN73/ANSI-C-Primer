@@ -52,15 +52,7 @@ int getint(int *pint);
 int str2int(char *intarray, int *pint);
 int int2str(int number, char* num_str);
 void getstring(FILE *file, char string[]);
-int getstr(FILE *file, char *string);/******************************************
- **                                      **
- **             user library             **
- **                                      **
- ******************************************
- **               usrlib.c               **
- ******************************************
- **          kimchulmin, 2026.4          **
- ******************************************/
+int getstr(FILE *file, char *string);
  
 int putstr(FILE *file, char *string);
 int strlength(char sl[]);
@@ -70,13 +62,6 @@ void str2floatarray(char string[], float floatarray[]);
 void sort(int pNumber[], int size, int direction);
 void swapbypointer(int *x, int *y);
 struct numbers swapbystructure(int x, int y);
-unsigned int rnd(unsigned int *random_num);
-void setrnd (unsigned int x, unsigned int *random_num);
-#ifdef RANDOM_DICE
-unsigned int dice(time_t the_time);
-#else
-unsigned int dice(time_t the_time, unsigned int seed);
-#endif
 int mean(int values[], int number);
 void sortstring(char *input[], int ct);
 void sortstringbystrcpy(char (*input)[LINLEN], int ct);

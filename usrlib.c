@@ -275,45 +275,6 @@ struct numbers swapbystructure(int x, int y)
 	return num;
 }
 
-#ifdef RANDOM_DICE
-unsigned int dice(time_t the_time)
-{
-	unsigned int seed;
-	float roll;
-	
-	sleep(1);
-	
-	time(&the_time);
-	seed = the_time % SCALE;
-	//printf("\nthe_time : %d , seed : %d\n", the_time, seed);
-	printf("\n");
-#else
-unsigned int dice(time_t the_time, unsigned int seed)
-{
-	float roll;
-#endif
-	static unsigned int random_num = 1;
-			
-	setrnd(seed, &random_num);
-	
-	roll = ( (float) rnd(&random_num) / SCALE ) * SIDES + 1;
-	
-	return (unsigned int) roll;
-}
-
-unsigned int rnd(unsigned int *random_num)
-{
-
-	*random_num = (*random_num * 25173 + 13849) % SCALE;
-
-	return *random_num;
-}
-
-void setrnd (unsigned int x, unsigned int *random_num)
-{
-	*random_num = x;	
-}
-
 int mean(int values[], int number)
 {
 	int index;

@@ -1,3 +1,13 @@
+/******************************************
+ **                                      **
+ **              dice game               **
+ **                                      **
+ ******************************************
+ **              dicegame.c              **
+ ******************************************
+ **          kimchulmin, 2026.4          **
+ ******************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,9 +19,14 @@
 
 static unsigned int random_num = 1;
 
-unsigned int rnd();
-void setrnd(unsigned int x);
+unsigned int rnd(unsigned int *random_num);
+void setrnd (unsigned int x, unsigned int *random_num);
+#ifdef RANDOM_DICE
 unsigned int dice(time_t the_time);
+#else
+unsigned int dice(time_t the_time, unsigned int seed);
+#endif
+
 
 void main(void) 
 {
@@ -24,6 +39,8 @@ void main(void)
 	for(i = 0 ; i < dice_num ; i++) printf("value of %d dice: %d\n", i+1, dice(the_time));
 }
 
+
+#ifdef RANDOM_DICE
 unsigned int dice(time_t the_time)
 {
 	unsigned int seed;
@@ -33,25 +50,34 @@ unsigned int dice(time_t the_time)
 	
 	time(&the_time);
 	seed = the_time % SCALE;
-	printf("the_time : %d , seed : %d\n", the_time, seed);
+	printf("\nthe_time : %d , seed : %d\n", the_time, seed);
+	printf("\n");
+#else
+unsigned int dice(time_t the_time, unsigned int seed)
+{
+	float roll;
+#endif
+	static unsigned int random_num = 1;
 			
-	setrnd(seed);
+	setrnd(seed, &random_num);
 	
-	roll = ( (float) rnd() / SCALE ) * SIDES + 1;
+	roll = ( (float) rnd(&random_num) / SCALE ) * SIDES + 1;
 	
 	return (unsigned int) roll;
 }
 
-unsigned int rnd()
+unsigned int rnd(unsigned int *random_num)
 {
-	random_num = (random_num * 25173 + 13849) % SCALE;
 
-	return random_num;
+	*random_num = (*random_num * 25173 + 13849) % SCALE;
+
+	return *random_num;
 }
 
-void setrnd (unsigned int x)
+void setrnd (unsigned int x, unsigned int *random_num)
 {
-	random_num = x;	
+	*random_num = x;	
 }
+
 
 
