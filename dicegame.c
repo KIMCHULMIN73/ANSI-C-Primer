@@ -21,12 +21,7 @@ static unsigned int random_num = 1;
 
 unsigned int rnd(unsigned int *random_num);
 void setrnd (unsigned int x, unsigned int *random_num);
-#ifdef RANDOM_DICE
 unsigned int dice(time_t the_time);
-#else
-unsigned int dice(time_t the_time, unsigned int seed);
-#endif
-
 
 void main(void) 
 {
@@ -36,27 +31,22 @@ void main(void)
 	printf("Input number of dices : ", dice_num);
 	scanf("%d", &dice_num);
 	
-	for(i = 0 ; i < dice_num ; i++) printf("value of %d dice: %d\n", i+1, dice(the_time));
+	for(i = 0 ; i < dice_num ; i++) 
+		printf("value of %d dice: %d\n", i+1, dice(the_time));
 }
 
 
-#ifdef RANDOM_DICE
 unsigned int dice(time_t the_time)
 {
 	unsigned int seed;
 	float roll;
-	
-	sleep(1);
-	
+
+	sleep(1);	
 	time(&the_time);
 	seed = the_time % SCALE;
-	printf("\nthe_time : %d , seed : %d\n", the_time, seed);
+
 	printf("\n");
-#else
-unsigned int dice(time_t the_time, unsigned int seed)
-{
-	float roll;
-#endif
+
 	static unsigned int random_num = 1;
 			
 	setrnd(seed, &random_num);
