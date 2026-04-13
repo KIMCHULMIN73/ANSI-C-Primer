@@ -1,3 +1,13 @@
+/******************************************
+ **                                      **
+ **           test allocation            **
+ **                                      **
+ ******************************************
+ **                alloc.c               **
+ ******************************************
+ **          kimchulmin, 2026.4          **
+ ******************************************/
+
 #include "./usrlib.h"
 
 #define HALT	""
@@ -34,7 +44,7 @@ struct linklist *makenode(struct linklist *rp, char ch)
 {
 	if (rp == NULL) {
 		rp = malloc( sizeof(struct linklist) );
-		rp->c  = ch;
+		rp->ch  = ch;
 		rp->next = NULL;
 	}
 	else
