@@ -1,7 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "./chio.h"
+/******************************************
+ **                                      **
+ **    count number of char/word/line    **
+ **                                      **
+ ******************************************
+ **              readword.c              **
+ ******************************************
+ **          kimchulmin, 2026.4          **
+ ******************************************/
+
+#include "usrlib.h"
 
 #define YES	1
 #define NO	0

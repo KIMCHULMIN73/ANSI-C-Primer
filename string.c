@@ -1,11 +1,17 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <unistd.h>
+/******************************************
+ **                                      **
+ **             test string              **
+ **                                      **
+ ******************************************
+ **               string.c               **
+ ******************************************
+ **          kimchulmin, 2026.4          **
+ ******************************************/
+ 
 #include "./usrlib.h"
 
 #define MSG		"You must have many talents. Tell me some."
+#define MAX_LENGTH	256
 
 char m1[] = "Just limit yourself to one line's worth.";
 char *m2 = "If you can't think of anything, fake it.";
@@ -114,7 +120,7 @@ char* argv[];
     
     printf("If you input Max. %d sentence, I will sort them.\n To stop, you can hit [ENTER] key.\n", LIM);
     
-    while ( gets(input[ct]) != NULL && strcmp(input[ct], HALT) != 0 && ++ct < LIM) {
+    while ( fgets(input[ct], MAX_LENGTH, stdin) != NULL && strcmp(input[ct], HALT) != 0 && ++ct < LIM) {
 		ptstr[ct] = input[ct];
 	}
 	

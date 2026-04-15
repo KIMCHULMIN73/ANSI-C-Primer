@@ -1,16 +1,15 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+/******************************************
+ **                                      **
+ **            test C pointer            **
+ **                                      **
+ ******************************************
+ **               pointer.c              **
+ ******************************************
+ **          kimchulmin, 2026.4          **
+ ******************************************/
+
+#include "usrlib.h"
 #include <time.h>
-
-struct numbers {
-	int		x;
-	int		y;
-};
-
-
-void swapbypointer(int *x, int *y);
-struct numbers swapbystructure(int x, int y);
 
 void main(void)
 {
@@ -78,28 +77,4 @@ double power(int base, int exp)
 	else for(answer = 1 ; exp < 0 ; exp++) answer /= base;
 
 	return answer;
-}
-
-void swapbypointer(int *x, int *y)
-{
-	int temp;
-	
-	temp = *x;
-	*x = *y;
-	*y = temp;
-}
-
-struct numbers swapbystructure(int x, int y)
-{
-	int temp;
-	struct numbers num;
-
-	num.x = x;
-	num.y = y; 
-		
-	temp = num.x;
-	num.x = num.y;
-	num.y = temp;
-	
-	return num;
 }
