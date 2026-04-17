@@ -1,3 +1,13 @@
+/******************************************
+ **                                      **
+ **         guess the exact number       **
+ **                                      **
+ ******************************************
+ **                guess.c               **
+ ******************************************
+ **          kimchulmin, 2026.4          **
+ ******************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -6,7 +16,7 @@
 #define HIGH	1000
 #define LOW		1
 
-void main(void) /* guess the exact number */
+void main(void)
 {
     int random, innum, score;
     char name[50];

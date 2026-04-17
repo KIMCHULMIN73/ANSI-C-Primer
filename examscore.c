@@ -1,9 +1,19 @@
+/******************************************
+ **                                      **
+ **         calculate exam score         **
+ **                                      **
+ ******************************************
+ **              examscore.c             **
+ ******************************************
+ **          kimchulmin, 2026.4          **
+ ******************************************/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-#define EXIT	-999
+#define EXIT	-1
 
 void main(void)
 {
