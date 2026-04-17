@@ -1,3 +1,13 @@
+/******************************************
+ **                                      **
+ **          test data structure         **
+ **                                      **
+ ******************************************
+ **             datastruct.c             **
+ ******************************************
+ **          kimchulmin, 2026.4          **
+ ******************************************/
+ 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -50,15 +60,15 @@ char* argv[];
 
 	while (i < MAXBOOKS)  {
 		printf("Input title of book %d : ", i+1);
-		gets(manybook[i].title);
+		fgets(manybook[i].title, LINLEN, stdin);
 		if( strcmp(manybook[i].title, HALT) != 0) ;
 		else break;
 
 		printf("Input author of book %d : ", i+1);
-		gets(manybook[i].author);
+		fgets(manybook[i].author, LINLEN, stdin);
 		
 		printf("Input date of book %d (yyyy/mm/dd): ", i+1);
-		gets(manybook[i].date);
+		fgets(manybook[i].date, 11, stdin);
 
 		printf("Input pages of book %d : ", i+1);
 		scanf("%d", &(manybook[i].pages));
