@@ -12,10 +12,10 @@
 
 void main(void) /* converts 2 char to int */
 {
-	char ch;
-		
-	printf("Input a character by your keyboard.\n");
-	scanf("%c",&ch);
-	
-	printf("ASCII CODE of \'%c\' is %d.\n", ch, ch);
+    char ch;
+
+    printf("Input a character by your keyboard.\n");
+    scanf("%c",&ch);
+
+    printf("ASCII CODE of \'%c\' is %d.\n", ch, ch);
 }
