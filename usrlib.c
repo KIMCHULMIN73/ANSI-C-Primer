@@ -274,88 +274,89 @@ void sort(int pNumber[], int size, int direction)
         }      
 }
 
-//$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
 void swapbypointer(int *x, int *y)
 {
-	int temp;
-	
-	temp = *x;
-	*x = *y;
-	*y = temp;
+    int temp;
+
+    temp = *x;
+    *x = *y;
+    *y = temp;
 }
 
 struct numbers swapbystructure(int x, int y)
 {
-	int temp;
-	struct numbers num;
+    int temp;
+    struct numbers num;
 
-	num.x = x;
-	num.y = y; 
-		
-	temp = num.x;
-	num.x = num.y;
-	num.y = temp;
+    num.x = x;
+    num.y = y; 
 	
-	return num;
+    temp = num.x;
+    num.x = num.y;
+    num.y = temp;
+
+    return num;
 }
 
 int mean(int values[], int number)
 {
-	int index;
-	long sum;
-	
-	if (number <= 0)
-	{
-		printf("ERR : Invalid array index. \n");
-		return FAIL;
-	}
-	else
-	{
-		for(index = 0, sum = 0 ; index < number ; index++)
-		{
-			sum += *(values+index);			
-		}
-		return (int)(sum / number);
-	}
+    int index;
+    long sum;
+
+    if (number <= 0)
+    {
+        printf("ERR : Invalid array index. \n");
+        return FAIL;
+    }
+    else
+    {
+        for(index = 0, sum = 0 ; index < number ; index++)
+        {
+            sum += *(values+index);			
+        }
+        
+        return (int)(sum / number);
+    }
 }
 
 void sortstring(char *input[], int ct)
 {
-	char *temp;
-	int x, y;
-	
-	for ( x = 0 ; x < (ct-1) ; x++)
-	    for ( y = (x+1) ; y < ct ; y++)
-			if ( strcmp(input[x], input[y]) > 0){
-				temp = input[x];
-				input[x] = input[y];
-				input[y] = temp;
-			}
+    char *temp;
+    int x, y;
+
+    for ( x = 0 ; x < (ct-1) ; x++)
+        for ( y = (x+1) ; y < ct ; y++)
+            if ( strcmp(input[x], input[y]) > 0)
+            {
+                temp = input[x];
+                input[x] = input[y];
+                input[y] = temp;
+            }
 }
 
 void sortstringbystrcpy(char (*input)[LINLEN], int ct)
 //void sortstringbystrcpy(char *input, int ct)
 {
-	char temp[LINLEN];
-	int x, y;
+    char temp[LINLEN];
+    int x, y;
 
-	//printf("\nInput Result\n");
-	//for ( x = 0; x < LIM ; x++)
-	    //puts(input[x]);
-	    ////puts(&input[x*LINLEN]);
-	    
-	for ( x = 0 ; x < (ct-1) ; x++)
-	    for ( y = (x+1) ; y < ct ; y++)
-	        if ( strcmp(input[x], input[y]) > 0){
-				strcpy(temp, input[x]);
-				strcpy(input[x], input[y]);
-				strcpy(input[y], temp);
-			}
-			//if ( strcmp(&input[x*LINLEN], &input[y*LINLEN]) > 0){
-			//	strcpy(temp, &input[x*LINLEN]);
-			//	strcpy(&input[x*LINLEN], &input[y*LINLEN]);
-			//	strcpy(&input[y*LINLEN], temp);
-			//}
+    //printf("\nInput Result\n");
+    //for ( x = 0; x < LIM ; x++)
+    //puts(input[x]);
+    //puts(&input[x*LINLEN]);
+
+    for ( x = 0 ; x < (ct-1) ; x++)
+        for ( y = (x+1) ; y < ct ; y++)
+            if ( strcmp(input[x], input[y]) > 0)
+            {
+                strcpy(temp, input[x]);
+                strcpy(input[x], input[y]);
+                strcpy(input[y], temp);
+            }
+            //if ( strcmp(&input[x*LINLEN], &input[y*LINLEN]) > 0)
+            //{
+            //	strcpy(temp, &input[x*LINLEN]);
+            //	strcpy(&input[x*LINLEN], &input[y*LINLEN]);
+            //	strcpy(&input[y*LINLEN], temp);
+            //}
 }
-
