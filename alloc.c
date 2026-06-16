@@ -35,9 +35,9 @@ void main(void)
     while( (ch = getch()) != 24 )
     {
         putch(ch);
-		putch('\n');
+        putch('\n');
         root = makenode(root, ch);
-	}
+    }
         
     prnt(root);
 }
@@ -50,7 +50,7 @@ struct linklist *makenode(struct linklist *rp, char ch)
         rp->ch  = ch;
         rp->next = NULL;
     }
-	else
+    else
         rp->next = makenode(rp->next, ch);
 
     return rp;
@@ -81,7 +81,7 @@ void prnt(struct linklist *rp)
     while(flag) 
     {
         fgets(symph, LENLIN, stdin);
-	
+
         if ( strcmp(symph, HALT) == 0)
             flag = FALSE;
         else
