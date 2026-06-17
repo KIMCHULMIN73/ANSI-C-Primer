@@ -10,7 +10,7 @@
 
 #include "./usrlib.h"
 
-int getch(void)
+int getch(void)    // input 1 character without ENTER key (carriage return)
 {
     int ch;
     struct termios old;

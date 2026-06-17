@@ -31,15 +31,21 @@ void main(void)
 {
     int example_num;
 
-    printf("\ninput example number to execute (1 or 2)");
-    scanf("%d", example_num);
+    printf("\ninput example number to execute (1 or 2)\n");
+    scanf("%d", &example_num);
 
     switch (example_num)
     {
-        case 1    : example_1();
+        case 1    : printf("\n\n**** WELCOME EXAMPLE[1] for memory-allocation ****");
+                    printf("\n\nif you input any key,\nthen console print-out that character~!\n(to EXIT, input CTRL+X)");
+                    example_1();
                     break;
-        case 2    : example_2();
+
+        case 2    : printf("\n\n**** WELCOME EXAMPLE[2] for memory-allocation ****");
+                    printf("\n\nif you input any key,\nthen console print-out that character~!\n(to EXIT, input CTRL+X)");
+                    example_2();
                     break;
+
         default   : break;
     }
 }
@@ -50,14 +56,15 @@ void example_1(void)
     struct linklist *root;
 
     root = NULL;    
-    while( (ch = getch()) != 24 )
+    while( (ch = getch()) != 24 )    //ASCII CODE 24 : CANCEL(CTRL + X)
     {
         putch(ch);
         putch('\n');
-        root = makenode(root, ch);
+        root = makenode(root, ch);    //russian painter algorithm is occured due to this code... fix this later.
     }
         
     prnt(root);
+
 }
 
 void example_2(void)
@@ -103,7 +110,7 @@ void example_2(void)
         puts(starts[count]);
 }
 
-struct linklist *makenode(struct linklist *rp, char ch)
+struct linklist *makenode(struct linklist *rp, char ch)    //russian painter algorithm is occured due to this code... fix this later.
 {
     if (rp == NULL)
     {
@@ -122,7 +129,7 @@ void prnt(struct linklist *rp)
     if(rp != NULL)
     {
         prnt(rp->next);
-        printf("%c\n", rp->ch);
+        printf("%c ", rp->ch);
     }
     else
         ;
