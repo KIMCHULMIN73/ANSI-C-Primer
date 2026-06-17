@@ -24,9 +24,27 @@ struct linklist
 
 struct linklist *makenode(struct linklist *rp, char ch);
 void prnt(struct linklist *root);
+void example_1(void);
+void example_2(void);
 
 void main(void)
-#ifndef EX1
+{
+    int example_num;
+
+    printf("\ninput example number to execute (1 or 2)");
+    scanf("%d", example_num);
+
+    switch (example_num)
+    {
+        case 1    : example_1();
+                    break;
+        case 2    : example_2();
+                    break;
+        default   : break;
+    }
+}
+
+void example_1(void)
 {
     char ch;
     struct linklist *root;
@@ -42,32 +60,7 @@ void main(void)
     prnt(root);
 }
 
-struct linklist *makenode(struct linklist *rp, char ch)
-{
-    if (rp == NULL)
-    {
-        rp = malloc( sizeof(struct linklist) );
-        rp->ch  = ch;
-        rp->next = NULL;
-    }
-    else
-        rp->next = makenode(rp->next, ch);
-
-    return rp;
-}
-
-void prnt(struct linklist *rp)
-{
-    if(rp != NULL)
-    {
-        prnt(rp->next);
-        printf("%c\n", rp->ch);
-    }
-    else
-        ;
-}
-
-#else
+void example_2(void)
 {
     char store[BLOCK], symph[LENLIN];
     char *starts[MAX],  *end;
@@ -109,4 +102,28 @@ void prnt(struct linklist *rp)
     for( count = 0; count < index ; count++ )
         puts(starts[count]);
 }
-#endif
+
+struct linklist *makenode(struct linklist *rp, char ch)
+{
+    if (rp == NULL)
+    {
+        rp = malloc( sizeof(struct linklist) );
+        rp->ch  = ch;
+        rp->next = NULL;
+    }
+    else
+        rp->next = makenode(rp->next, ch);
+
+    return rp;
+}
+
+void prnt(struct linklist *rp)
+{
+    if(rp != NULL)
+    {
+        prnt(rp->next);
+        printf("%c\n", rp->ch);
+    }
+    else
+        ;
+}

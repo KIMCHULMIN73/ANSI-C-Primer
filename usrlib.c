@@ -25,14 +25,14 @@ int getch(void)
 
     tcsetattr(0, TCSAFLUSH, &current);
     ch = getchar();
-    tcsetattr(0, TCSAFLUSH, &old);		
+    tcsetattr(0, TCSAFLUSH, &old);
 
-    return ch;	
+    return ch;
 }
 
 void putch(char ch)
 {
-    putchar(ch);	
+    putchar(ch);
 }
 
 int getint(int *pint)
