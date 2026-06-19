@@ -60,7 +60,7 @@ void example_1(void)
     {
         putch(ch);
         putch('\n');
-        root = makenode(root, ch);    //russian painter algorithm is occured due to this code... fix this later.
+        root = makenode(root, ch);    //russian painter algorithm is occured due to this code... analyze this later.
     }
         
     prnt(root);
@@ -110,7 +110,7 @@ void example_2(void)
         puts(starts[count]);
 }
 
-struct linklist *makenode(struct linklist *rp, char ch)    //russian painter algorithm is occured due to this code... fix this later.
+struct linklist *makenode(struct linklist *rp, char ch)    //russian painter algorithm is occured due to this code... analyze this later.
 {
     if (rp == NULL)
     {
