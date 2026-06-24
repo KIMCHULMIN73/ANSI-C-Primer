@@ -13,7 +13,7 @@
 #define ASCII_CAN    0x18    // Ascii code '0x18(24)' = CANCEL = 'Ctrl' + 'x'
 #define HALT         ""
 #define BLOCK        100
-#define LENLIN       40
+#define STR_LEN      256     // max number of charcters in a string, named 'member'
 #define MAX          50
 
 struct linklist              // a data structure node for single linked-list
@@ -23,9 +23,9 @@ struct linklist              // a data structure node for single linked-list
 };
 
 struct linklist *makenode(struct linklist *rp, char ch);
-void key_in_buffer(void);
-void example_2(void);
 void prnt(struct linklist *root);
+void character_buffer(void);
+void string_buffer(void);
 
 void main(void)
 {
@@ -36,24 +36,24 @@ void main(void)
 
     switch (example_num)
     {
-        case 1    : printf("\n\n**** Welcome Key-in Buffer with memory-allocation ****");
-                    printf("\n\nif you input any key,\nthen console print-out that character~!\n(to exit, input 'CTRL' + 'X')");
-                    key_in_buffer();
+        case 1    : printf("\n\n**** Test character_buffer with memory-allocation ****");
+                    character_buffer();
                     break;
 
-        case 2    : printf("\n\n**** Welcome Key-in Buffer with memory-allocation ****");
-                    printf("\n\nif you input any key,\nthen console print-out that character~!\n(to exit, input 'CTRL' + 'X')");
-                    example_2();
+        case 2    : printf("\n\n**** Test string_buffer with memory-allocation ****");
+                    string_buffer();
                     break;
 
         default   : break;
     }
 }
 
-void key_in_buffer(void)
+void character_buffer(void)
 {
     char ch;
     struct linklist *root;
+
+    printf("\n\nif you input any key,\nthen console print-out that immediatley\n(to exit, input 'CTRL' + 'X')");
 
     root = NULL;
 
@@ -66,49 +66,6 @@ void key_in_buffer(void)
         
     prnt(root);
 
-}
-
-void example_2(void)
-{
-    int index = 0, count = 0, flag = TRUE, cmp;
-    char store[BLOCK], symph[LENLIN];
-    char *start[MAX],  *end;
-
-    start[0] = store;
-    end = start[0] + BLOCK - 1;
-
-    printf("Input long names to test memory allocation()\n");
-
-    while(flag)
-    {
-        fgets(symph, LENLIN, stdin);
-
-        if ( strcmp(symph, HALT) == 0)
-            flag = FALSE;
-        else
-            flag = TRUE;
-
-        if( strlen(symph) > (end - start[index]) )
-        {
-            puts("alloc more memory\n");
-
-            start[index] = malloc(BLOCK);
-            end = start[index] + BLOCK - 1 ;
-        }
-        strcpy( start[index], symph );
-        start[index + 1] = start[index] + strlen(symph) + 1;
-
-        if( index++ < MAX -1 )
-        {
-            printf("that is %dth(nd/rd)\n", index);
-        }
-        else
-            flag = FALSE;
-    }
-
-    printf("### result is as below : \n");
-    for( count = 0; count < index ; count++ )
-        puts(start[count]);
 }
 
 struct linklist *makenode(struct linklist *rp, char ch)    // russian painter algorithm is here, is it enevitable?
@@ -134,4 +91,51 @@ void prnt(struct linklist *rp)
     }
     else
         ;
+}
+
+void string_buffer(void)
+{
+    int flag;        // flag for while-loop
+    int index = 0;
+    int count = 0;
+    char member[STR_LEN];    // string buffer array to store member's name & address
+    char store[BLOCK];
+    char *start[MAX],  *end;
+
+    printf("Input member's name & home address.\n");
+
+    start[0] = store;
+    end = start[0] + BLOCK - 1;
+    flag = TRUE;
+
+    while(flag)
+    {
+        fgets(member, STR_LEN, stdin);
+
+        if ( strcmp(member, HALT) == 0)
+            flag = FALSE;
+        else
+            flag = TRUE;
+
+        if( strlen(member) > (end - start[index]) )
+        {
+            puts("alloc more memory\n");
+
+            start[index] = malloc(BLOCK);
+            end = start[index] + BLOCK - 1 ;
+        }
+        strcpy( start[index], member );
+        start[index + 1] = start[index] + strlen(member) + 1;
+
+        if( index++ < MAX -1 )
+        {
+            printf("that is %dth(nd/rd)\n", index);
+        }
+        else
+            flag = FALSE;
+    }
+
+    printf("### result is as below : \n");
+    for( count = 0; count < index ; count++ )
+        puts(start[count]);
 }
