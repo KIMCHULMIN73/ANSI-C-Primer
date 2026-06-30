@@ -99,6 +99,15 @@ void string_buffer(void)
     int flag;                            // flag for while-loop
     int index;                           // index for pointer array, 'start' to distinguish each string(member)
     char member[STR_LEN];                // string variable(array) to store member's name & home-address
+
+/*
+change code
+ 1. remove store array and make store pointer to alloc memory buffer
+ 2. string lenth > block size
+ 3. change routine - user can input larger string than intial memory buffer, 
+                     and program has to allocate additional memory to store that string. 
+*/
+
     char store[BLOCK_SIZE];              // memory buffer to store all member's information
     char *start[TOTAL_MEMBERS], *end;    // pointer to store location of each string(member)
 
