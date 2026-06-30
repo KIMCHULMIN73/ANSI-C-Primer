@@ -10,13 +10,13 @@
 
 #include "./usrlib.h"
 
-#define ASCII_CAN        0x18     // Ascii code '0x18(24)' = CANCEL = 'CTRL' + 'X'
-#define NO_STRING        ""       // empty input (ex. 'Carriage Return' or 'Enter')
-#define STR_LEN          60       // max number of charcters in 'member', a string variable(array)
-#define BLOCK_SIZE       100      // size of unit memory block
-#define TOTAL_MEMBERS    40       // maximum number of total members
+#define ASCII_CAN          0x18    // Ascii code '0x18(24)' = CANCEL = 'CTRL' + 'X'
+#define CARRIAGE_RETURN    "\n"    // empty input (ex. 'Carriage Return' or 'Enter')
+#define STR_LEN            60      // max number of charcters in 'member', a string variable(array)
+#define BLOCK_SIZE         100     // size of unit memory block
+#define TOTAL_MEMBERS      40      // maximum number of total members
 
-struct linklist                   // a data structure node to store one-character for single linked-list
+struct linklist                    // a data structure node to store one-character for single linked-list
 {
     char ch;
     struct linklist *next;
@@ -24,6 +24,7 @@ struct linklist                   // a data structure node to store one-characte
 
 struct linklist *makenode(struct linklist *rp, char ch);
 void prnt(struct linklist *root);
+void clear_stdin(void);
 void character_buffer(void);
 void string_buffer(void);
 
@@ -37,11 +38,12 @@ void main(void)
     switch (example_num)
     {
         case 1    : printf("\n\n**** Test character_buffer with memory-allocation ****");
+                    clear_stdin();
                     character_buffer();
                     break;
 
         case 2    : printf("\n\n**** Test string_buffer with memory-allocation ****");
-                    getch();
+                    clear_stdin();
                     string_buffer();
                     break;
 
@@ -94,11 +96,12 @@ void prnt(struct linklist *rp)
         ;
 }
 
-void string_buffer(void)
+void clear_stdin(void)
 {
-    int flag;                            // flag for while-loop
-    int index;                           // index for pointer array, 'start' to distinguish each string(member)
-    char member[STR_LEN];                // string variable(array) to store member's name & home-address
+    int c;
+    while ((c=getchar()) != '\n' && c != EOF)
+        ;
+}
 
 /*
 change code
@@ -108,10 +111,14 @@ change code
                      and program has to allocate additional memory to store that string. 
 */
 
+void string_buffer(void)
+{
+    int flag;                            // flag for while-loop
+    int index;                           // index for pointer array, 'start' to distinguish each string(member)
+    char member[STR_LEN];                // string variable(array) to store member's name & home-address
     char store[BLOCK_SIZE];              // memory buffer to store all member's information
     char *start[TOTAL_MEMBERS], *end;    // pointer to store location of each string(member)
 
-    // initiate variables
     flag = TRUE;
     index = 0;
     start[0] = store;
@@ -123,7 +130,7 @@ change code
         fgets(member, STR_LEN, stdin);
         //printf("\nThe length of your input is %d\n",strlen(member));
 
-        if (strcmp(member, NO_STRING) == 0)          // if 'memer' has not any string, then stop while() loop.
+        if (strcmp(member,CARRIAGE_RETURN) == 0)          // if 'memer' has not any string, then stop while() loop.
             flag = FALSE;
         else
             flag = TRUE;
@@ -139,7 +146,7 @@ change code
         strcpy(start[index], member);
         start[index+1] = start[index] + strlen(member) + 1;
 
-        if(index++ < TOTAL_MEMBERS - 1)
+        if((flag != FALSE) && index++ < TOTAL_MEMBERS - 1)
         {
             printf("That is %dth(nd/rd)\n", index);
         }
