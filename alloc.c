@@ -11,10 +11,25 @@
 #include "./usrlib.h"
 
 #define ASCII_CAN          0x18    // Ascii code '0x18(24)' = CANCEL = 'CTRL' + 'X'
-#define CARRIAGE_RETURN    "\n"    // empty input (ex. 'Carriage Return' or 'Enter')
-#define STR_LEN            60      // max number of charcters in 'member', a string variable(array)
+#define CARRIAGE_RETURN    "\n"    // 'Carriage Return' or 'Enter'
+
+#ifdef VARI_ALLOC
+
+#define STR_LEN            256      // max number of charcters in 'member', a string variable(array)
+
+#elifdef UNIT_ALLOC
+
+#define STR_LEN            256      // max number of charcters in 'member', a string variable(array)
+#define BLOCK_SIZE         10     // size of unit memory block
+
+#else
+
+#define STR_LEN            50      // max number of charcters in 'member', a string variable(array)
 #define BLOCK_SIZE         100     // size of unit memory block
-#define TOTAL_MEMBERS      40      // maximum number of total members
+
+#endif
+
+#define TOTAL_MEMBERS      50      // maximum number of total members
 
 struct linklist                    // a data structure node to store one-character for single linked-list
 {
@@ -56,7 +71,7 @@ void character_buffer(void)
     char ch;
     struct linklist *root;
 
-    printf("\n\nif you input any key,\nthen console print-out that immediatley\n(to exit, input 'CTRL' + 'X')");
+    printf("\n\nif you input any key,\nthen console print-out that immediatley\n(to exit, input 'CTRL' + 'X')\n");
 
     root = NULL;
 
@@ -66,9 +81,9 @@ void character_buffer(void)
         putch('\n');
         root = makenode(root, ch);
     }
-        
-    prnt(root);
 
+    prnt(root);
+    putch('\n');
 }
 
 struct linklist *makenode(struct linklist *rp, char ch)     // russian painter algorithm is here, is it enevitable?
@@ -103,15 +118,53 @@ void clear_stdin(void)
         ;
 }
 
-/*
-change code
- 1. remove store array and make store pointer to alloc memory buffer
- 2. string lenth > block size
- 3. change routine - user can input larger string than intial memory buffer, 
-                     and program has to allocate additional memory to store that string. 
-*/
-
 void string_buffer(void)
+#ifdef VARI_ALLOC
+{
+    int flag;                            // flag for while-loop
+    int index,count;
+    int string_lenth;
+    char member[STR_LEN];                // string variable(array) to store member's name & home-address
+    char *storage[TOTAL_MEMBERS];        // pointer to store all members's information.
+
+    flag = TRUE;
+    index = 0;
+
+    printf("\nWelcome to various size allocation~!\n");
+
+    while(flag)
+    {
+        printf("\nInput member's name & home-address.\n");
+        fgets(member, STR_LEN, stdin);
+        string_lenth = strlen(member);
+
+        if(strcmp(member,CARRIAGE_RETURN) == 0)    // if 'memer' has not any string, then stop while() loop.
+            flag = FALSE;
+        else
+            flag = TRUE;
+
+        storage[index] = malloc(string_lenth);
+        
+        strcpy(storage[index], member);
+
+        if((flag != FALSE) && index++ < TOTAL_MEMBERS - 1)
+        {
+            printf("That is %dth(nd/rd)\n", index);
+        }
+        else
+            flag = FALSE;
+    }
+
+    printf("### Result is as below : \n");
+    for(int count = 0; count < index ; count++ )
+        puts(storage[count]);
+}
+#elifdef UNIT_ALLOC
+{
+    printf("\nWelcome to unit size allocation~!\n");
+
+}
+#else
 {
     int flag;                            // flag for while-loop
     int index;                           // index for pointer array, 'start' to distinguish each string(member)
@@ -123,6 +176,8 @@ void string_buffer(void)
     index = 0;
     start[0] = store;
     end = start[0] + BLOCK_SIZE - 1;
+
+    printf("\nWelcome to classic allocation~!\n");
 
     while(flag)
     {
@@ -158,3 +213,4 @@ void string_buffer(void)
     for(int count = 0; count < index ; count++ )
         puts(start[count]);
 }
+#endif
