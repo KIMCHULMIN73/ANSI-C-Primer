@@ -41,7 +41,10 @@ void prnt(struct linklist *root);
 void clear_stdin(void);
 void character_buffer(void);
 void string_buffer(void);
-struct unit_storage *add_storage(int num_of_storage);
+struct unit_storage *alloc_storage(int num_of_storage);
+struct unit_storage *alloc_storage_node(struct unit_storage *sp);
+void print_storage(struct unit_storage *sp);
+int freenode(struct linklist *rp);
 
 void main(void)
 {
@@ -84,6 +87,8 @@ void character_buffer(void)
 
     prnt(root);
     putch('\n');
+
+    freenode(root);
 }
 
 struct linklist *makenode(struct linklist *rp, char ch)     // russian painter algorithm is here, is it enevitable?
@@ -98,6 +103,15 @@ struct linklist *makenode(struct linklist *rp, char ch)     // russian painter a
         rp->next = makenode(rp->next, ch);
 
     return rp;
+}
+
+int freenode(struct linklist *rp)
+{
+    if(rp != NULL)
+    {
+
+    }
+
 }
 
 void prnt(struct linklist *rp)
@@ -164,19 +178,11 @@ void string_buffer(void)
 }
 #elifdef UNIT_ALLOC
 {
-// STR_LEN 50, UNIT_MEM_SIZE 10
-//    struct unit_storage
-//    {
-//        char *unit_memory
-//        struct storage *prev;
-//        struct storage *next;
-//    }
-
     int flag;
     int index;
     int string_lenth, quotient, remainder, storage_size;
     char member[STR_LEN];
-    struct unit_storage *my_storage;
+    struct unit_storage *storage;
 
     flag = TRUE;
 
@@ -188,7 +194,7 @@ void string_buffer(void)
         fgets(member, STR_LEN, stdin);
         string_lenth = strlen(member);
 
-        if (strcmp(member,CARRIAGE_RETURN) == 0)          // if 'memer' has not any string, then stop while() loop.
+        if (strcmp(member,CARRIAGE_RETURN) == 0)      // if 'memer' has not any string, then stop while() loop.
             flag = FALSE;
         else
             flag = TRUE;
@@ -196,31 +202,82 @@ void string_buffer(void)
         quotient = string_lenth / UNIT_MEM_SIZE;
         remainder = string_lenth % UNIT_MEM_SIZE;
 
-        if(remainder == 0)
-            storage_size = quotient;
-        else
-            storage_size = quotient + 1;
+        storage_size = quotient + (remainder?1:0);    // caculate storage size to save a strimg in member[]
 
-        printf("\ninput string is %d bytes, so you need %d of unit_storages\n",string_lenth, storage_size);
-        my_storage = add_storage(storage_size);
+        storage = NULL;
+
+        for(index = 0 ; index < storage_size ; index++)
+            storage = alloc_storage_node(storage);
+
+        print_storage(storage);
+    }
+}
+
+void print_storage(struct unit_storage *sp)
+{
+    if(sp != NULL)
+    {
+        UNIT_MEM_SIZE;  printf("%c", sp->unit_memory); 
+        print_storage(sp->next);
+    }
+    else
+        ;
+}
+
+struct unit_storage *alloc_storage_node(struct unit_storage *sp)
+{
+    if (sp == NULL)
+    {
+        sp = malloc(sizeof(struct unit_storage));
+        sp->unit_memory = malloc(UNIT_MEM_SIZE);
+        //sp->prev = NULL;
+        sp->next = NULL;
+    }
+    else
+        sp->next = alloc_storage_node(sp->next);
+
+    return sp;
+}
+
+/*
+struct unit_storage *alloc_storage(int num_of_storage)
+{
+    int index;
+    struct unit_storage *storage[num_of_storage];
+
+    for(index = 0 ; index < num_of_storage ; index++)
+    {
+        storage[index] = calloc(1, sizeof(struct unit_storage));
 
     }
 
+    for(index = 0 ; index < num_of_storage ; index++)
+    {
+        storage[index]->unit_memory = malloc(UNIT_MEM_SIZE);
+        if(index == 0)
+            storage[index]->prev = NULL;
+        else
+            storage[index]->prev = storage[index-1];
+
+        if(index == num_of_storage-1)
+            storage[index]->next = NULL;
+        else
+            storage[index]->prev = storage[index-1];
+
+        storage[index]->next = storage[index+1];
+    }
+
+    //return storage;
 }
+*/
 
-struct unit_storage *add_storage(int num_of_storage)
-{
-    struct unit_storage *strg;
-
-    strg = calloc(1, sizeof(struct unit_storage));
-
-    strg->unit_memory = malloc(UNIT_MEM_SIZE);
-    strg->prev = NULL;
-    strg->next = NULL;
-
-    return strg;
-}
-
+/*
+        storage = alloc_storage(storage_size);          // allocating memory buffer to save string on HEAP
+        if (storage == NULL)
+        {
+            flag = FALSE;
+        }
+*/
 
 #else
 {
@@ -269,7 +326,9 @@ struct unit_storage *add_storage(int num_of_storage)
 
     printf("### Result is as below : \n");
     for(int count = 0; count < index ; count++ )
+    {
         puts(start[count]);
         free(start[count]);
+    }
 }
 #endif
