@@ -209,6 +209,10 @@ void string_buffer(void)
         for(index = 0 ; index < storage_size ; index++)
             storage = alloc_storage_node(storage);
 
+        //print storage->next for DEBUG
+        
+        
+
         index = 0;
         count = 0;
         while(member[index] != '\0')
