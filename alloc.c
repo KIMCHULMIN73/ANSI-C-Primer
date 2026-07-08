@@ -179,7 +179,7 @@ void string_buffer(void)
 #elifdef UNIT_ALLOC
 {
     int flag;
-    int index;
+    int index, count;
     int string_lenth, quotient, remainder, storage_size;
     char member[STR_LEN];
     struct unit_storage *storage;
@@ -209,19 +209,43 @@ void string_buffer(void)
         for(index = 0 ; index < storage_size ; index++)
             storage = alloc_storage_node(storage);
 
+        index = 0;
+        count = 0;
+        while(member[index] != '\0')
+        {
+            *((storage->unit_memory) + count) = member[index];
+            index++;
+
+            if(count < UNIT_MEM_SIZE)
+                count++;
+            else
+            {
+                count = 0;
+                storage = storage->next;
+            }
+        }
+        
         print_storage(storage);
     }
 }
 
 void print_storage(struct unit_storage *sp)
 {
-    if(sp != NULL)
+    int count;
+
+    count = 0;
+    while(*((sp->unit_memory) + count) != '\0')
     {
-        UNIT_MEM_SIZE;  printf("%c", sp->unit_memory); 
-        print_storage(sp->next);
+        printf("%c", *((sp->unit_memory) + count));
+
+        if(count < UNIT_MEM_SIZE)
+                count++;
+        else
+        {
+            count = 0;
+            sp = sp->next;
+        }
     }
-    else
-        ;
 }
 
 struct unit_storage *alloc_storage_node(struct unit_storage *sp)
