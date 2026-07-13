@@ -13,7 +13,7 @@
 #define ASCII_CAN          0x18        // Ascii code '0x18(24)' = CANCEL = 'CTRL' + 'X'
 #define CARRIAGE_RETURN    "\n"        // 'Carriage Return' or 'Enter'
 #define STR_LEN            256         // max number of charcters in 'member', a string variable(array)
-#define TOTAL_MEMBERS      3         // maximum number of total members
+#define TOTAL_MEMBERS      10          // maximum number of total members
 
 #ifdef VARI_ALLOC
 
@@ -44,7 +44,7 @@ void string_buffer(void);
 struct unit_storage *alloc_storage(int num_of_storage);
 struct unit_storage *alloc_storage_node(struct unit_storage *sp);
 void save_member_into_storage(struct unit_storage *sp, char member[]);
-void print_storage(struct unit_storage *sp);
+void print_storage(struct unit_storage *sp[], int member_index);
 int freenode(struct linklist *rp);
 
 void main(void)
@@ -199,10 +199,13 @@ void string_buffer(void)
 
     while(flag)
     {
-        printf("\nInput %d(st/nd) member's name & home-address.\n", member_index + 1);
-        fgets(member, STR_LEN, stdin);
-        
-        if ( member_index > TOTAL_MEMBERS || strcmp(member,CARRIAGE_RETURN) == 0 )      // condition to stop while() loop.
+        if (member_index < TOTAL_MEMBERS )
+        {
+            printf("\nInput %d(st/nd) member's name & home-address.\n", member_index + 1);
+            fgets(member, STR_LEN, stdin);
+        }
+
+        if (member_index >= TOTAL_MEMBERS || strcmp(member,CARRIAGE_RETURN) == 0)      // condition to stop while() loop.
             flag = FALSE;
         else
         {
@@ -221,17 +224,43 @@ void string_buffer(void)
                 storage[member_index] = alloc_storage_node(storage[member_index]);
 
             save_member_into_storage(storage[member_index], member);
-        }
 
-        member_index++;
+            member_index++;
+        }
     }
 
     printf("\n*************************");
     printf("\n   Total member : %d", member_index);
     printf("\n*************************\n");
+    
+    if(member_index > 0)
+        print_storage(&storage[member_index - 1], member_index - 1);
 
-    //print_storage(storage[member_index]);
+}
 
+void print_storage(struct unit_storage *sp[], int member_index)
+{
+    int index, count;
+    struct unit_storage *storage;
+
+    count = 0;
+    storage = *(sp-1);
+    for(index = 0 ; index = member_index ; index++)
+    {
+        while(*((storage->unit_memory) + count) != '\0')
+        {
+            printf("%c", *((storage->unit_memory) + count));
+
+            if(count < UNIT_MEM_SIZE)
+                count++;
+            else
+            {
+                count = 0;
+                storage = storage->next;
+            }
+        }
+        printf("\n");
+    }
 }
 
 struct unit_storage *alloc_storage_node(struct unit_storage *sp)
@@ -262,29 +291,12 @@ void save_member_into_storage(struct unit_storage *sp, char member[])
         *((sp->unit_memory) + j) = member[i++];
 
         if(j < UNIT_MEM_SIZE)
+        {
             j++;
+        }
         else
         {
             j = 0;
-            sp = sp->next;
-        }
-    }
-}
-
-void print_storage(struct unit_storage *sp)
-{
-    int count;
-
-    count = 0;
-    while(*((sp->unit_memory) + count) != '\0')
-    {
-        printf("%c", *((sp->unit_memory) + count));
-
-        if(count < UNIT_MEM_SIZE)
-                count++;
-        else
-        {
-            count = 0;
             sp = sp->next;
         }
     }
