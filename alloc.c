@@ -7,6 +7,8 @@
  ************************************************
  **            kimchulmin, 2026.4              **
  ************************************************/
+ 
+// 메모리 해제 코드 추가, 인덱스 변수 의미있게 정리
 
 #include "./usrlib.h"
 
@@ -234,33 +236,8 @@ void string_buffer(void)
     printf("\n*************************\n");
     
     if(member_index > 0)
-        print_storage(&storage[member_index - 1], member_index - 1);
+        print_storage(&storage[0], member_index);
 
-}
-
-void print_storage(struct unit_storage *sp[], int member_index)
-{
-    int index, count;
-    struct unit_storage *storage;
-
-    count = 0;
-    storage = *(sp-1);
-    for(index = 0 ; index = member_index ; index++)
-    {
-        while(*((storage->unit_memory) + count) != '\0')
-        {
-            printf("%c", *((storage->unit_memory) + count));
-
-            if(count < UNIT_MEM_SIZE)
-                count++;
-            else
-            {
-                count = 0;
-                storage = storage->next;
-            }
-        }
-        printf("\n");
-    }
 }
 
 struct unit_storage *alloc_storage_node(struct unit_storage *sp)
@@ -299,6 +276,32 @@ void save_member_into_storage(struct unit_storage *sp, char member[])
             j = 0;
             sp = sp->next;
         }
+    }
+}
+
+void print_storage(struct unit_storage *sp[], int member_index)
+{
+    int index, count;
+    struct unit_storage *storage;
+
+    for(index = 0 ; index < member_index ; index++)
+    {
+        count = 0;
+        storage = *(sp+index);
+
+        while(*((storage->unit_memory) + count) != '\0')
+        {
+            printf("%c", *((storage->unit_memory) + count));
+
+            if(count < UNIT_MEM_SIZE)
+                count++;
+            else
+            {
+                count = 0;
+                storage = storage->next;
+            }
+        }
+        printf("\n");
     }
 }
 
