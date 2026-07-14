@@ -8,28 +8,28 @@
  **            kimchulmin, 2026.4              **
  ************************************************/
  
-// 메모리 해제 코드 추가, 인덱스 변수 의미있게 정리
+// 메모리 해제 코드 추가
 
 #include "./usrlib.h"
 
 #define ASCII_CAN          0x18        // Ascii code '0x18(24)' = CANCEL = 'CTRL' + 'X'
-#define CARRIAGE_RETURN    "\n"        // 'Carriage Return' or 'Enter'
+#define CARRIAGE_RETURN    "\n"        // 'Enter'
 #define STR_LEN            256         // max number of charcters in 'member', a string variable(array)
 #define TOTAL_MEMBERS      10          // maximum number of total members
 
 #ifdef VARI_ALLOC
 
 #elifdef UNIT_ALLOC
-    #define UNIT_MEM_SIZE      10      // size of unit memory block
+#define UNIT_MEM_SIZE      10      // size of unit memory block
 
-    struct unit_storage                // a data structure node to make unit strage with double linked-list
-    {
-        char *unit_memory;
-        struct unit_storage *prev;
-        struct unit_storage *next;
-    };
+struct unit_storage                // a data structure node to make unit strage with double linked-list
+{
+    char *unit_memory;
+    struct unit_storage *prev;
+    struct unit_storage *next;
+};
 #else
-    #define BLOCK_SIZE         100     // size of unit memory block
+#define BLOCK_SIZE         100     // size of unit memory block
 #endif
 
 struct linklist                        // a data structure node to store one-character with single linked-list
@@ -38,39 +38,56 @@ struct linklist                        // a data structure node to store one-cha
     struct linklist *next;
 };
 
+void character_buffer(void);
 struct linklist *makenode(struct linklist *rp, char ch);
 void prnt(struct linklist *root);
-void clear_stdin(void);
-void character_buffer(void);
+void freenode(struct linklist *rp);
 void string_buffer(void);
-struct unit_storage *alloc_storage(int num_of_storage);
+#ifdef UNIT_ALLOC
 struct unit_storage *alloc_storage_node(struct unit_storage *sp);
 void save_member_into_storage(struct unit_storage *sp, char member[]);
 void print_storage(struct unit_storage *sp[], int member_index);
-int freenode(struct linklist *rp);
+void free_string_buffer(struct unit_storage *sp[], int member_index);
+#endif
 
 void main(void)
 {
-    int example_num;
+    int flag;
+    char example, retry;
 
-    system("clear");
-    printf("\ninput example number to execute (1 or 2)\n");
-    scanf("%d", &example_num);
-
-    system("clear");
-    switch (example_num)
+    flag = TRUE;
+    while(flag)
     {
-        case 1    : printf("\n\n**** Test character_buffer with memory-allocation ****");
-                    clear_stdin();
-                    character_buffer();
-                    break;
+        system("clear");
+        printf("\ninput example number to execute (1 or 2)\n");
+        //scanf("%c",example);
+        example = getch();
 
-        case 2    : printf("\n\n**** Test string_buffer with memory-allocation ****");
-                    clear_stdin();
-                    string_buffer();
-                    break;
+        switch (example)
+        {
+            case '1'    : printf("\n\n**** Test character_buffer with memory-allocation ****");
+                          //flush_stdin();
+                          character_buffer();
+                          break;
 
-        default   : break;
+            case '2'    : printf("\n\n**** Test string_buffer with memory-allocation ****");
+                          //flush_stdin();
+                          string_buffer();
+                          break;
+
+            default     : break;
+        }
+
+        printf("\n\nRetry?(Y/N)");
+        retry = getch();
+        
+        if(retry == 'N' || retry == 'n')
+        {
+            flag = FALSE;
+            putch('\n');
+        }
+        else
+            flag = TRUE;
     }
 }
 
@@ -90,7 +107,9 @@ void character_buffer(void)
         root = makenode(root, ch);
     }
 
+    printf("\n\n[result]\n");
     prnt(root);
+    putch('\n');
     putch('\n');
 
     freenode(root);
@@ -110,15 +129,6 @@ struct linklist *makenode(struct linklist *rp, char ch)     // russian painter a
     return rp;
 }
 
-int freenode(struct linklist *rp)
-{
-    if(rp != NULL)
-    {
-
-    }
-
-}
-
 void prnt(struct linklist *rp)
 {
     if(rp != NULL)
@@ -130,10 +140,15 @@ void prnt(struct linklist *rp)
         ;
 }
 
-void clear_stdin(void)
+void freenode(struct linklist *rp)
 {
-    int c;
-    while ((c=getchar()) != '\n' && c != EOF)
+    if(rp != NULL)
+    {
+        freenode(rp->next);
+        free(rp);
+        rp = NULL;
+    }
+    else
         ;
 }
 
@@ -141,17 +156,17 @@ void string_buffer(void)
 #ifdef VARI_ALLOC
 {
     int flag;                            // flag for while-loop
-    int i, j        ;                    // to count number in for-loop or while-loop
+    int pos;                             // index/position of member of 'storage' array 
     int string_lenth;                    // variables to calculate string length
     char member[STR_LEN];                // string variable(array) to store member's name & home-address
     char *storage[TOTAL_MEMBERS];        // pointer to store all members's information.
 
-    flag = TRUE;
-    i = 0;
-
     printf("\n------------------------------------\n");
     printf("\nWelcome to various size allocation~!\n");
     printf("\n------------------------------------\n");
+
+    pos = 0;
+    flag = TRUE;
 
     while(flag)
     {
@@ -164,29 +179,30 @@ void string_buffer(void)
         else
             flag = TRUE;
 
-        storage[i] = malloc(string_lenth);
+        storage[pos] = malloc(string_lenth);
         
-        strcpy(storage[i], member);
+        strcpy(storage[pos], member);
 
-        if((flag != FALSE) && i++ < TOTAL_MEMBERS - 1)
+        if((flag != FALSE) && pos++ < TOTAL_MEMBERS - 1)
         {
-            printf("That is %dth(nd/rd)\n", index);
+            printf("That is %dth(nd/rd)\n", pos);
         }
         else
             flag = FALSE;
     }
 
     printf("### Result is as below : \n");
-    for(int j = 0; j < i ; j++ )
+    while(--pos >= 0)
     {
-        puts(storage[j]);
-        free(storage[j]);
+        puts(storage[pos]);
+        free(storage[pos]);
+        storage[pos] = NULL;
     }
 }
 #elifdef UNIT_ALLOC
 {
     int flag;                                               // flag for while-loop
-    int i;                                                  // to count number in for-loop or while-loop
+    int unit_number;                                        // to count number of unit(10-byte memory)s 
     int member_index;                                       // to index members
     int string_lenth, quotient, remainder, storage_size;    // variables to calculate string length & storage size
     char member[STR_LEN];                                   // string variable(array) to store member's name & home-address
@@ -222,7 +238,7 @@ void string_buffer(void)
 
             storage[member_index] = NULL;
 
-            for(i = 0 ; i < storage_size ; i++)
+            for(unit_number = 0 ; unit_number < storage_size ; unit_number++)
                 storage[member_index] = alloc_storage_node(storage[member_index]);
 
             save_member_into_storage(storage[member_index], member);
@@ -237,6 +253,8 @@ void string_buffer(void)
     
     if(member_index > 0)
         print_storage(&storage[0], member_index);
+    
+    free_string_buffer(&storage[0], member_index);
 
 }
 
@@ -281,23 +299,49 @@ void save_member_into_storage(struct unit_storage *sp, char member[])
 
 void print_storage(struct unit_storage *sp[], int member_index)
 {
-    int index, count;
+    int i, j;    // to count number in for-loop or while-loop
     struct unit_storage *storage;
 
-    for(index = 0 ; index < member_index ; index++)
+    for(i = 0 ; i < member_index ; i++)
     {
-        count = 0;
-        storage = *(sp+index);
+        j = 0;
+        storage = *(sp+i);
 
-        while(*((storage->unit_memory) + count) != '\0')
+        while(*((storage->unit_memory) + j) != '\0')
         {
-            printf("%c", *((storage->unit_memory) + count));
+            printf("%c", *((storage->unit_memory) + j));
 
-            if(count < UNIT_MEM_SIZE)
-                count++;
+            if(j < UNIT_MEM_SIZE)
+                j++;
             else
             {
-                count = 0;
+                j = 0;
+                storage = storage->next;
+            }
+        }
+        printf("\n");
+    }
+}
+
+void free_string_buffer(struct unit_storage *sp[], int member_index)
+{
+    int i, j;    // to count number in for-loop or while-loop
+    struct unit_storage *storage;
+
+    for(i = 0 ; i < member_index ; i++)
+    {
+        j = 0;
+        storage = *(sp+i);
+
+        while(*((storage->unit_memory) + j) != '\0')
+        {
+            printf("%c", *((storage->unit_memory) + j));
+
+            if(j < UNIT_MEM_SIZE)
+                j++;
+            else
+            {
+                j = 0;
                 storage = storage->next;
             }
         }
@@ -308,13 +352,13 @@ void print_storage(struct unit_storage *sp[], int member_index)
 #else
 {
     int flag;                            // flag for while-loop
-    int index;                           // index for pointer array, 'start' to distinguish each string(member)
+    int pos;                             // index for pointer array, 'start' to distinguish each string(member)
     char member[STR_LEN];                // string variable(array) to store member's name & home-address
     char store[BLOCK_SIZE];              // memory buffer to store all member's information
     char *start[TOTAL_MEMBERS], *end;    // pointer to store location of each string(member)
 
     flag = TRUE;
-    index = 0;
+    pos = 0;
     start[0] = store;
     end = start[0] + BLOCK_SIZE - 1;
     
@@ -333,30 +377,31 @@ void print_storage(struct unit_storage *sp[], int member_index)
         else
             flag = TRUE;
 
-        if(strlen(member) > (end - start[index]))    // if length of member is bigger than current memory buffer, then allocate additional memory buffer.
+        if(strlen(member) > (end - start[pos]))    // if length of member is bigger than current memory buffer, then allocate additional memory buffer.
         {
             puts("Now allocating more memory buffer...\n");
 
-            start[index] = malloc(BLOCK_SIZE);
-            end = start[index] + BLOCK_SIZE - 1 ;
+            start[pos] = malloc(BLOCK_SIZE);
+            end = start[pos] + BLOCK_SIZE - 1 ;
         }
 
-        strcpy(start[index], member);
-        start[index+1] = start[index] + strlen(member) + 1;
+        strcpy(start[pos], member);
+        start[pos+1] = start[pos] + strlen(member) + 1;
 
-        if((flag != FALSE) && index++ < TOTAL_MEMBERS - 1)
+        if((flag != FALSE) && pos++ < TOTAL_MEMBERS - 1)
         {
-            printf("That is %dth(nd/rd)\n", index);
+            printf("That is %dth(nd/rd)\n", pos);
         }
         else
             flag = FALSE;
     }
 
     printf("### Result is as below : \n");
-    for(int count = 0; count < index ; count++ )
+    while(--pos >= 0)
     {
-        puts(start[count]);
-        free(start[count]);
+        puts(start[pos]);
+        free(start[pos]);
+        start[pos] = NULL;
     }
 }
 #endif

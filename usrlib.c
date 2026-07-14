@@ -113,7 +113,7 @@ void getstring(FILE *file, char string[])
 }
 
 int getstr(FILE *file, char *string)
-{	
+{
     int cond = TRUE;
 
     while (cond)
@@ -165,13 +165,13 @@ int getintarray(int pNumber[], int size)
         }
         else if (result == YES_NUM )
             printf ("\nNot integer\n");
-		else
-		    printf ("\nInvalid Input.\n");
+        else
+            printf ("\nInvalid Input.\n");
 
         printf("\n> ");
     }
 
-    return index;	
+    return index;
 }
 
 void str2intarray(char string[], int integer[])
@@ -183,7 +183,7 @@ void str2intarray(char string[], int integer[])
         if( string[ind_str] == '\n' || string[ind_str] == ' ' || string[ind_str] == '\t' || string[ind_str] == '.' )
             ind_str++;
         else
-        {			
+        {
             if( string[ind_str] == '+' || string[ind_str] == '-')
             {
                 sign = (string[ind_str] == '+') ? 1 : -1;
@@ -290,7 +290,7 @@ struct numbers swapbystructure(int x, int y)
 
     num.x = x;
     num.y = y; 
-	
+
     temp = num.x;
     num.x = num.y;
     num.y = temp;
@@ -359,4 +359,11 @@ void sortstringbystrcpy(char (*input)[LINLEN], int ct)
             //	strcpy(&input[x*LINLEN], &input[y*LINLEN]);
             //	strcpy(&input[y*LINLEN], temp);
             //}
+}
+
+void flush_stdin(void)
+{
+    int c;
+    while ((c=getchar()) != '\n' && c != EOF)
+        ;
 }

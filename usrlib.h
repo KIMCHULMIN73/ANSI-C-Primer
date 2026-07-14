@@ -66,3 +66,4 @@ int mean(int values[], int number);
 void sortstring(char *input[], int ct);
 void sortstringbystrcpy(char (*input)[LINLEN], int ct);
 //void sortstringbystrcpy(char *input, int ct);
+void flush_stdin(void);
