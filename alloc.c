@@ -8,7 +8,7 @@
  **            kimchulmin, 2026.4              **
  ************************************************/
  
-// 메모리 해제 코드 추가
+// 347 줄 : free_string_buffer 코딩하기
 
 #include "./usrlib.h"
 
@@ -110,7 +110,6 @@ void character_buffer(void)
     printf("\n\n[result]\n");
     prnt(root);
     putch('\n');
-    putch('\n');
 
     freenode(root);
 }
@@ -120,8 +119,13 @@ struct linklist *makenode(struct linklist *rp, char ch)     // russian painter a
     if (rp == NULL)
     {
         rp = malloc(sizeof(struct linklist));
-        rp->ch  = ch;
-        rp->next = NULL;
+        if(rp == NULL)
+            perror("malloc is failed in makenode()");
+        else
+        {
+            rp->ch  = ch;
+            rp->next = NULL;
+        }
     }
     else
         rp->next = makenode(rp->next, ch);
@@ -180,12 +184,18 @@ void string_buffer(void)
             flag = TRUE;
 
         storage[pos] = malloc(string_lenth);
-        
+        if(storage[pos] == NULL)
+        {
+            perror("malloc is failed at storage[pos] pointer array in string_buffer()");
+            flag = FALSE;
+            break;
+        }
+
         strcpy(storage[pos], member);
 
         if((flag != FALSE) && pos++ < TOTAL_MEMBERS - 1)
         {
-            printf("That is %dth(nd/rd)\n", pos);
+            printf("That is %dth(nd/rd/th)\n", pos);
         }
         else
             flag = FALSE;
@@ -194,8 +204,12 @@ void string_buffer(void)
     printf("### Result is as below : \n");
     while(--pos >= 0)
     {
-        puts(storage[pos]);
-        free(storage[pos]);
+        if(storage[pos] != NULL)
+        {
+            puts(storage[pos]);
+            free(storage[pos]);
+        }
+
         storage[pos] = NULL;
     }
 }
@@ -219,7 +233,7 @@ void string_buffer(void)
     {
         if (member_index < TOTAL_MEMBERS )
         {
-            printf("\nInput %d(st/nd) member's name & home-address.\n", member_index + 1);
+            printf("\nInput %d(st/nd/th) member's name & home-address.\n", member_index + 1);
             fgets(member, STR_LEN, stdin);
         }
 
@@ -263,9 +277,16 @@ struct unit_storage *alloc_storage_node(struct unit_storage *sp)
     if (sp == NULL)
     {
         sp = malloc(sizeof(struct unit_storage));
-        sp->unit_memory = malloc(UNIT_MEM_SIZE);
-        sp->prev = NULL;
-        sp->next = NULL;
+        if(sp == NULL)
+            perror("malloc for 'sp' is failed in alloc_storage_node()");
+        else
+        {
+            sp->unit_memory = malloc(UNIT_MEM_SIZE);
+            if(sp->unit_memory == NULL)
+                perror("malloc for 'sp->unit_memory' is failed in alloc_storage_node()");
+            sp->prev = NULL;
+            sp->next = NULL;
+        }
     }
     else
     {
@@ -356,6 +377,7 @@ void free_string_buffer(struct unit_storage *sp[], int member_index)
     char member[STR_LEN];                // string variable(array) to store member's name & home-address
     char store[BLOCK_SIZE];              // memory buffer to store all member's information
     char *start[TOTAL_MEMBERS], *end;    // pointer to store location of each string(member)
+    _Bool malloc_flag[TOTAL_MEMBERS];    // flag whether malloc() is called or not
 
     flag = TRUE;
     pos = 0;
@@ -366,31 +388,42 @@ void free_string_buffer(struct unit_storage *sp[], int member_index)
     printf("\nWelcome to classic allocation~!\n");
     printf("\n------------------------------------\n");
 
+    memset(malloc_flag, FALSE, sizeof(malloc_flag));
+    
     while(flag)
     {
         printf("\nInput member's name & home-address.\n");
         fgets(member, STR_LEN, stdin);
-        //printf("\nThe length of your input is %d\n",strlen(member));
 
-        if (strcmp(member,CARRIAGE_RETURN) == 0)          // if 'memer' has not any string, then stop while() loop.
+        if (strcmp(member,CARRIAGE_RETURN) == 0)    // if 'memer' has not any string, then stop while() loop.
             flag = FALSE;
         else
             flag = TRUE;
 
-        if(strlen(member) > (end - start[pos]))    // if length of member is bigger than current memory buffer, then allocate additional memory buffer.
+        if(strlen(member) > (end - start[pos]))     // if length of member is bigger than current memory buffer, then allocate additional memory buffer.
         {
             puts("Now allocating more memory buffer...\n");
 
             start[pos] = malloc(BLOCK_SIZE);
+            if(start[pos] == NULL)
+            {
+                perror("malloc is failed at start[pos] pointer array");
+                flag = FALSE;
+                break;
+            }
+            malloc_flag[pos] = TRUE;
             end = start[pos] + BLOCK_SIZE - 1 ;
         }
+        else
+            malloc_flag[pos] = FALSE;
 
         strcpy(start[pos], member);
         start[pos+1] = start[pos] + strlen(member) + 1;
 
-        if((flag != FALSE) && pos++ < TOTAL_MEMBERS - 1)
+        if((flag != FALSE) && pos < TOTAL_MEMBERS - 1)
         {
-            printf("That is %dth(nd/rd)\n", pos);
+            pos++;
+            printf("That is %d(nd/rd/th)\n", pos);
         }
         else
             flag = FALSE;
@@ -400,7 +433,10 @@ void free_string_buffer(struct unit_storage *sp[], int member_index)
     while(--pos >= 0)
     {
         puts(start[pos]);
-        free(start[pos]);
+
+        if(malloc_flag[pos] == TRUE)
+            free(start[pos]);
+
         start[pos] = NULL;
     }
 }
