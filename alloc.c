@@ -7,15 +7,13 @@
  ************************************************
  **            kimchulmin, 2026.4              **
  ************************************************/
- 
-// 347 줄 : free_string_buffer 코딩하기
 
 #include "./usrlib.h"
 
-#define ASCII_CAN          0x18        // Ascii code '0x18(24)' = CANCEL = 'CTRL' + 'X'
-#define CARRIAGE_RETURN    "\n"        // 'Enter'
-#define STR_LEN            256         // max number of charcters in 'member', a string variable(array)
-#define TOTAL_MEMBERS      10          // maximum number of total members
+#define ASCII_CAN          0x18    // ascii code '0x18(24)' = CANCEL = 'CTRL' + 'X'
+#define ENTER    "\n"              // 'Enter'
+#define STR_LEN            256     // max number of charcters in 'member', a string variable(array)
+#define TOTAL_MEMBERS      10      // maximum number of total members
 
 #ifdef VARI_ALLOC
 
@@ -32,7 +30,7 @@ struct unit_storage                // a data structure node to make unit strage 
 #define BLOCK_SIZE         100     // size of unit memory block
 #endif
 
-struct linklist                        // a data structure node to store one-character with single linked-list
+struct linklist                    // a data structure node to store one-character with single linked-list
 {
     char ch;
     struct linklist *next;
@@ -61,6 +59,7 @@ void main(void)
         system("clear");
         printf("\ninput example number to execute (1 or 2)\n");
         //scanf("%c",example);
+        //example = getchar();
         example = getch();
 
         switch (example)
@@ -114,7 +113,7 @@ void character_buffer(void)
     freenode(root);
 }
 
-struct linklist *makenode(struct linklist *rp, char ch)     // russian painter algorithm is here, is it enevitable?
+struct linklist *makenode(struct linklist *rp, char ch)    // russian painter algorithm is here, is it inevitable?
 {
     if (rp == NULL)
     {
@@ -159,11 +158,11 @@ void freenode(struct linklist *rp)
 void string_buffer(void)
 #ifdef VARI_ALLOC
 {
-    int flag;                            // flag for while-loop
-    int pos;                             // index/position of member of 'storage' array 
-    int string_lenth;                    // variables to calculate string length
-    char member[STR_LEN];                // string variable(array) to store member's name & home-address
-    char *storage[TOTAL_MEMBERS];        // pointer to store all members's information.
+    int flag;                        // flag for while-loop
+    int pos;                         // index/position of member of 'storage' array 
+    int string_lenth;                // variables to calculate string length
+    char member[STR_LEN];            // string variable(array) to store member's name & home-address
+    char *storage[TOTAL_MEMBERS];    // pointer to store all members's information.
 
     printf("\n------------------------------------\n");
     printf("\nWelcome to various size allocation~!\n");
@@ -178,7 +177,7 @@ void string_buffer(void)
         fgets(member, STR_LEN, stdin);
         string_lenth = strlen(member);
 
-        if(strcmp(member,CARRIAGE_RETURN) == 0)    // if 'memer' has not any string, then stop while() loop.
+        if(strcmp(member,ENTER) == 0)    // if 'memer' has not any string, then stop while() loop.
             flag = FALSE;
         else
             flag = TRUE;
@@ -237,18 +236,18 @@ void string_buffer(void)
             fgets(member, STR_LEN, stdin);
         }
 
-        if (member_index >= TOTAL_MEMBERS || strcmp(member,CARRIAGE_RETURN) == 0)      // condition to stop while() loop.
+        if (member_index >= TOTAL_MEMBERS || strcmp(member,ENTER) == 0)    // condition to stop while() loop.
             flag = FALSE;
         else
         {
             string_lenth = strlen(member);
-            member[string_lenth-1] = '\0';                // because fgets() includes '\n' in its result string so remove '\n' with '\0'-the end of string.
+            member[string_lenth-1] = '\0';                                           // because fgets() includes '\n' in its result string so remove '\n' with '\0'-the end of string.
 
             string_lenth = strlen(member);
             quotient = string_lenth / UNIT_MEM_SIZE;
             remainder = string_lenth % UNIT_MEM_SIZE;
 
-            storage_size = quotient + (remainder?1:0);    // caculate storage size to save a strimg in member[]
+            storage_size = quotient + (remainder ? 1 : 0);                           // caculate storage size to save a strimg in member[]
 
             storage[member_index] = NULL;
 
@@ -320,7 +319,7 @@ void save_member_into_storage(struct unit_storage *sp, char member[])
 
 void print_storage(struct unit_storage *sp[], int member_index)
 {
-    int i, j;    // to count number in for-loop or while-loop
+    int i, j;    // to index array in for-loop or while-loop
     struct unit_storage *storage;
 
     for(i = 0 ; i < member_index ; i++)
@@ -328,16 +327,18 @@ void print_storage(struct unit_storage *sp[], int member_index)
         j = 0;
         storage = *(sp+i);
 
-        while(*((storage->unit_memory) + j) != '\0')
+        while(storage != NULL && *((storage->unit_memory) + j) != '\0')
         {
             printf("%c", *((storage->unit_memory) + j));
 
-            if(j < UNIT_MEM_SIZE)
+            if(j < UNIT_MEM_SIZE - 1)
                 j++;
             else
             {
                 j = 0;
                 storage = storage->next;
+                if(storage == NULL)
+                    break;
             }
         }
         printf("\n");
@@ -346,27 +347,26 @@ void print_storage(struct unit_storage *sp[], int member_index)
 
 void free_string_buffer(struct unit_storage *sp[], int member_index)
 {
-    int i, j;    // to count number in for-loop or while-loop
+    int i, j;    // to index array in for-loop or while-loop
     struct unit_storage *storage;
 
     for(i = 0 ; i < member_index ; i++)
     {
-        j = 0;
         storage = *(sp+i);
 
-        while(*((storage->unit_memory) + j) != '\0')
+        while(storage != NULL)
         {
-            printf("%c", *((storage->unit_memory) + j));
+            free(storage->unit_memory);
+            storage->unit_memory = NULL;
 
-            if(j < UNIT_MEM_SIZE)
-                j++;
+            if(storage->next == NULL)
+                break;
             else
-            {
-                j = 0;
                 storage = storage->next;
-            }
+            
+            free(storage->prev);
+            storage->prev = NULL;
         }
-        printf("\n");
     }
 }
 
@@ -395,7 +395,7 @@ void free_string_buffer(struct unit_storage *sp[], int member_index)
         printf("\nInput member's name & home-address.\n");
         fgets(member, STR_LEN, stdin);
 
-        if (strcmp(member,CARRIAGE_RETURN) == 0)    // if 'memer' has not any string, then stop while() loop.
+        if (strcmp(member,ENTER) == 0)    // if 'memer' has not any string, then stop while() loop.
             flag = FALSE;
         else
             flag = TRUE;
