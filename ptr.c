@@ -7,16 +7,31 @@
  ******************************************
  **          kimchulmin, 2026.4          **
  ******************************************/
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <unistd.h>
 #include "./usrlib.h"
+
+#define PR(X)         printf("pointer X = %u , value *X = %5d , double pointer &X = %u\n", X, *X, &X)
 
 int main()
 {
+/////////////////////////////////////////////////////////////////////////
+
+    int *ptr1, *ptr2;                        // pointer variables to use 'PR(X)' macro
+    static int urn[] = {100, 200, 300};      // size of array 'urn' is 3
+    
+        ptr1 = urn; /* ptr1 = &urn[0] */
+    ptr2 = &urn[2];  
+
+    PR(ptr1);
+    ptr1++;
+    PR(ptr1);
+    PR(ptr2);
+    ++ptr2;
+    PR(ptr2);
+    
+    printf("ptr2 - ptr1 = %u\n\n\n", ptr2 - ptr1);
+
+
+////////////////////////////////////////////////////////////////////////
     int index, *ptr;
 
     int array[4][3] = { {1,3,5} , {2,4,6} , {5,6,8} , {123,234,456} };
