@@ -34,9 +34,6 @@
 #define FALSE         0
 #define TRUE          1
 
-#define SIDES         100
-#define SCALE         65536
-
 #define LIM           5
 #define LINLEN        81
 
