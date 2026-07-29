@@ -62,17 +62,27 @@ int main(int argc, char* argv[])
     }
 
     printf("-------------------------------------------------------------------------------------------------------\n");
-    printf(" TOTAL  :");
+    printf(" TOTAL  :   ");
 
     for (month = 0, total = 0 ; month < MONTHS ; month++)
     {
         for (year = 0, subtotal = 0 ; year < YEARS  ; year++)
             subtotal += rainfall[year][month];
-
+/*
         if(subtotal > 9.9)
             printf(" %2.1f",subtotal);
         else
             printf("  %2.1f",subtotal);
+*/
+
+        if(subtotal < 10)
+            printf("%3.1f   ",subtotal);
+        else if(subtotal < 100)
+            printf("%4.1f  ",subtotal);
+        else if(subtotal < 1000)
+            printf("%5.1f ",subtotal);
+        else
+            printf("%6f ",subtotal);
 
         total += subtotal;
         avg[month] = (float)subtotal/YEARS;
