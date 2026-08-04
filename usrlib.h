@@ -22,6 +22,9 @@
 
 #define STOP          -1
 
+#define YES     1
+#define NO      0
+
 #define YES_NUM       0
 #define NO_NUM        1
 
@@ -34,7 +37,6 @@
 #define FALSE         0
 #define TRUE          1
 
-#define LIM           5
 #define LINLEN        81
 
 struct numbers
