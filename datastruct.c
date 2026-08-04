@@ -8,23 +8,20 @@
  **          kimchulmin, 2026.4          **
  ******************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <unistd.h>
 #include "./usrlib.h"
 
 #define MAXBOOKS    100
-#define HALT        ""
+//#define HALT        '\n'
+#define HALT        "\n"
+#define LIM         5
 #define LEN         20
 
 struct book
 {
     char title[LINLEN];
     char author[LINLEN];
-    int pages;
     char date[11];
+    int pages;
     int value;
 };
 
@@ -50,13 +47,13 @@ struct funds
     float savefund;
 } stan = {"Garlic Melon Bank", 1023.4, "Snoopy's Saving and Loan", 4239.87};
 
-int main(argc, argv)
+int main(argc, argv)    //we can declare C function prototypes as this style.
 int argc;
 char* argv[];
 {
     int i = 0;
-    struct book mybook = {"Life is", "Chulmin Kim", 486, "1999/09/09", 500000};
     static struct book manybook[MAXBOOKS];
+    struct book mybook = {"Life is", "Chulmin Kim", "1999/09/09", 486, 500000};
 
     printf("| %s | %s | %d pages | %d won | %s |\n", mybook.title, mybook.author,
             mybook.pages, mybook.value, mybook.date); 
@@ -64,17 +61,21 @@ char* argv[];
     while (i < MAXBOOKS)
     {
         printf("Input title of book %d : ", i+1);
-        fgets(manybook[i].title, LINLEN, stdin);
-        if( strcmp(manybook[i].title, HALT) != 0)
-            ;
-        else
+        fgets(manybook[i].title, LINLEN, stdin);    //why we don't use scanf()?
+
+        //if(manybook[i].title[0] == HALT)
+        if(strcmp(manybook[i].title, HALT) == 0)
             break;
+        else
+            ;
 
         printf("Input author of book %d : ", i+1);
-        fgets(manybook[i].author, LINLEN, stdin);
+        //fgets(manybook[i].author, LINLEN, stdin);
+        scanf("%s",manybook[i].author);
 
         printf("Input date of book %d (yyyy/mm/dd): ", i+1);
-        fgets(manybook[i].date, 11, stdin);
+        //fgets(manybook[i].date, 11, stdin);
+        scanf("%s",manybook[i].date);
 
         printf("Input pages of book %d : ", i+1);
         scanf("%d", &(manybook[i].pages));
@@ -82,12 +83,15 @@ char* argv[];
         printf("Input value of book %d : ", i+1); 
         scanf("%d", &(manybook[i].value));
 
+        flush_stdin();
         while(getch() != '\n');
 
         printf("| %s | %s | %d pages | %d won | %s |\n  ", manybook[i].title, manybook[i].author,
                 manybook[i].pages, manybook[i].value, manybook[i++].date); 		
+
+        flush_stdin();
     }
-	
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     struct guy collegue[2] = { {"Robert", "Johnson", "dduckbbaegi", "rich man", 990000000}, 
