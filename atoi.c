@@ -10,8 +10,6 @@
 
 #include "./usrlib.h"
 
-#define YES     1
-#define NO      0
 #define SIZE    10
 #define issign(c)    ( (c) == '-' || (c) == '+' ) ? (1) : (0)
 
