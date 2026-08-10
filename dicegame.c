@@ -25,14 +25,22 @@ unsigned int dice(time_t the_time);
 
 void main(void) 
 {
-    int dice_num, i;
+    int i;
+    int play_count;
+    char *suffix;
     time_t the_time;
 
-    printf("Input number of dices : ", dice_num);
-    scanf("%d", &dice_num);
+    printf("\n\nHow many times you wanna play dice? : ", play_count);
+    scanf("%d", &play_count);
 
-    for(i = 0 ; i < dice_num ; i++) 
-        printf("value of %d dice: %d\n", i+1, dice(the_time));
+    for(i = 0 ; i < play_count ; i++)
+    {
+        suffix = i == 0 ? "st" :
+                 i == 1 ? "nd" :
+                 i == 2 ? "rd" :
+                          "th" ;
+        printf("value of %d%s play : %d\n",i+1, suffix, dice(the_time));
+    }
 }
 
 
@@ -66,5 +74,5 @@ unsigned int rnd(unsigned int *random_num)
 
 void setrnd (unsigned int x, unsigned int *random_num)
 {
-    *random_num = x;	
+    *random_num = x;
 }

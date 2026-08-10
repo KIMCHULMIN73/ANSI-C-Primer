@@ -2,15 +2,17 @@
 
 1. memalloc.c [난이도 : 중상] - linked list, recursive call,HEAP memory allocation 과정 학습
 
-2. randomnum.c [난이도 : 하] - 100면 짜리 주사위를 만들기 위해 realtime timer를 사용하여 난수를 발생시키는 과정 학습
+2. dicegame.c [난이도 : 하] - 6면 짜리 주사위를 만들기
 
-3. rainfall.c [난이도 : 중] - 외부 파일에서 읽은 문자열을 실수로 변환해 연산한 결과를 printf()서식으로 출력하는 과정 학습
+3. randomnum.c [난이도 : 하] - 100면 짜리 주사위를 만들기 위해 realtime timer를 사용하여 난수를 발생시키는 과정 학습
 
-4. atoi.c [난이도 : 하] - 표준 콘솔에서 문자열을 입력 받아 정수형으로 변환하는 과정 학습
+4. rainfall.c [난이도 : 중] - 외부 파일에서 읽은 문자열을 실수로 변환해 연산한 결과를 printf()서식으로 출력하는 과정 학습
 
-5. datastruct.c [난이도 : 중하] - structure type 변수를 정의하고 활용하는 사례 학습
+5. atoi.c [난이도 : 하] - 표준 콘솔에서 문자열을 입력 받아 정수형으로 변환하는 과정 학습
 
-6.
+6. datastruct.c [난이도 : 중하] - structure type 변수를 정의하고 활용하는 사례 학습
+
+7.
 
 
 
