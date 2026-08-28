@@ -12,7 +12,7 @@
 
 6. datastruct.c [난이도 : 중하] - structure type 변수를 정의하고 활용하는 사례 학습
 
-7.
+7. examscore.c [난이도 : 하] - malloc을 이용해서 임의의 수의 시험 성적을 입력받아 최고점, 최저점, 평균 계산
 
 
 
