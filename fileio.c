@@ -10,8 +10,8 @@
 
 #include "./usrlib.h"
 
-#define UPPER	1
-#define LOWER	0
+#define UPPER    1
+#define LOWER    0
 
 int convlet(char *file_1, char *file_2, int option);
 
