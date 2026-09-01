@@ -10,19 +10,26 @@
 
 #include "./usrlib.h"
 
+#ifdef CONV_LETT
 #define UPPER    1
 #define LOWER    0
 
-int convlet(char *file_1, char *file_2, int option);
+// convert_letter() funcion, depending on option, converts 'upper letter' in source file to 'lower letter' in destination file, vice versa 
+int convert_letter(char *src_file, char *dest_file, int option);
+#endif
 
 int main(int argc, char *argv[])
 {
     FILE *fpt;
-    long offset = 0L;
+    long offset;
     int max, cnt;
-    int flag = TRUE, option = UP;
+    int option;
     char ch;
+
+    fpt = NULL;
+    offset = 0L;
     max = cnt = 0;
+    option = UP;
 
     if (argc < 2)
     {
@@ -30,23 +37,25 @@ int main(int argc, char *argv[])
         goto EXIT;
     }
     else
-#ifdef STD_OUT
+#ifndef CONV_LETT
     {
-        if ( (fpt = fopen(argv[1], "r")) == 0 )
+        if ( (fpt = fopen(argv[1], "r")) == NULL )
             printf("Cannot open the FILE %s\n", argv[1]);
         else
         {
-            while( getc(fpt) != EOF ) max ++;
+            while( getc(fpt) != EOF ) max ++;    // count the number of characters in file, pointed 'ftp'
+            
             while (cnt++ < max)
             {
-                if ( fseek(fpt, offset++, 0) == 0 ) putchar(getc(fpt));
-                if ( fseek(fpt, -(offset+1), 2 ) == 0) putchar(getc(fpt));
+                // move a position of file pointer to get specific data in file, pointed 'ftp'
+                if (!fseek(fpt, offset++, SEEK_SET)) putchar(getc(fpt));
+                if (!fseek(fpt, -offset, SEEK_END)) putchar(getc(fpt));
             }
             fclose(fpt);
         }
     }
 #else
-    while(flag)
+    while(TRUE)
     {
         printf("Input Option 'U' or 'L' to convert letters : ");
         scanf("%c", &ch);
@@ -54,57 +63,60 @@ int main(int argc, char *argv[])
         if( ch == 'U' || ch == 'u' )
         {
             option = UP;
-            flag = FALSE;
+            break;
         }
         else if (ch == 'L' || ch == 'l' )
         {
             option = DOWN;
-            flag = FALSE;
+            break;
         }
         else
         {
             printf ("\nInvalid Value\n\n");
-            getchar();
+            while( (ch=getchar()) != '\n' )    // buffer flushing for next--turn scanf()
+                ;
         }
     }
 
-    convlet(argv[1], argv[2], option);
+    convert_letter(argv[1], argv[2], option);
 #endif
 
 EXIT :
     return FAIL;
 }
 
-int convlet(char *file_1, char *file_2, int option)
+#ifdef CONV_LETT
+int convert_letter(char *src_file, char *dest_file, int option)
 {
-    FILE *fpt_1, *fpt_2;
-    char *opt;
     int ch;
+    char *opt;
+    FILE *fpt_src, *fpt_dest;
 
     if ( option == UP )
         opt = "UPPER";
     else
         opt = "LOWER";
 
-    if ( (fpt_1 = fopen(file_1, "r")) == 0 )
-        printf("Cannot open the FILE %s\n", file_1);
+    if ( (fpt_src = fopen(src_file, "r")) == NULL )
+        printf("Cannot open the FILE %s\n", src_file);
     else
     {
-        printf("Start to convert from FILE '%s' to FILE '%s' with '%s' condition\n", file_1, file_2, opt);
-        fpt_2 = fopen(file_2, "w");
-        while( (ch = getc(fpt_1)) != EOF )
+        printf("Start to convert from FILE '%s' to FILE '%s' with '%s' condition\n", src_file, dest_file, opt);
+        fpt_dest = fopen(dest_file, "w");
+        while( (ch = getc(fpt_src)) != EOF )
         {
             if( option == UP )
                 ch = islower(ch) ? toupper(ch) : ch;
-			else
+            else
                 ch = isupper(ch) ? tolower(ch) : ch;
                 
-            putc(ch, fpt_2);
+            putc(ch, fpt_dest);
         }
-        fclose(fpt_1);
-        fclose(fpt_2);
+        fclose(fpt_src);
+        fclose(fpt_dest);
     }
-	
+
     puts("THE END.");
     putch('\n');
 }
+#endif
