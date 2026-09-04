@@ -10,7 +10,7 @@
 
 #include "./usrlib.h"
 
-enum color { WHITE, RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET, BLACK, NOCOLOR = 99  };
+enum color { WHITE, RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET, BLACK, NO_COLOR = 99 };
 
 struct
 {
@@ -25,8 +25,7 @@ typedef struct datal
     int age;
     int height;
     struct datal *next;
-} record ;
-
+} record;
 
 record *get(void);
 void put(record *pt);
