@@ -27,11 +27,12 @@ typedef struct entity
     struct entity *next;
 } record;
 
+record *get_handle(void);    
 int make_list(record *h_list);
-void delete_list(record *h_list);
+void delete_list(record **h_list);
 void print_list(record *h_list);
 
-int insert_node(record *h_list, record *p_node);
+int add_node(record *h_list, record *p_node);
 void delete_node(record *h_list, char *name);
 record *get_node(void);
 void put_node(record *p_node);
@@ -40,19 +41,14 @@ void main(void)
 {
     char name[15];
     int num_of_node, i;
-    record node, list_entry;
+    record node;
     record *p_node, *h_list;
 
     header.type = 0b000;
     header.trailer = 0b000;
     header.crc = 0b10;
 
-    *(list_entry.name) = '\0';
-    list_entry.age = 0;
-    list_entry.height = 0;    
-    list_entry.next = NULL;
-
-    h_list = &list_entry;    // handler for linked-list
+    h_list = get_handle();
 
     // to test make_list function
     make_list(h_list);
@@ -71,7 +67,7 @@ void main(void)
             if ((p_node = get_node()) == NULL)
                 exit(0);
             else
-                insert_node(p_node, h_list);
+                add_node(h_list, p_node);
         }
     print_list(h_list);
 
@@ -84,7 +80,21 @@ void main(void)
     print_list(h_list);
 
     // to test delete_list function : make_list() & delete_list() must be pair!
-    delete_list(h_list);
+    delete_list(&h_list);
+    print_list(h_list);
+}
+
+record *get_handle(void)
+{
+    record *handle;
+
+    handle = (record *)malloc(sizeof(record));
+    *(handle->name) = '\0';
+    handle->age = 0;
+    handle->height = 0;    
+    handle->next = NULL;
+
+    return handle;
 }
 
 int make_list(record *h_list)
@@ -100,29 +110,27 @@ int make_list(record *h_list)
         else if (strcmp(p_node->name, "/quit") == 0)
             break;
         else
-            insert_node(p_node, h_list);
+            add_node(h_list, p_node);
 
     return SUCCESS;
 }
 
-void delete_list(record *h_list)
+void delete_list(record **h_list)
 {
-/*    record *p_node, *prev_node, *current_node;
+    record *current_node, *next_node;
 
-    if(h_list == NULL)
+    if((h_list == NULL) || (*h_list == NULL))
         exit(-1);
 
-    prev_node = h_list;
-    current_node = h_list->next;
+    current_node = *h_list;
 
     while(current_node != NULL)
     {
-        prev_node = prev_node->next;
-        current_node = current_node->next;
+        next_node = current_node->next;
+        free(current_node);
+        current_node = next_node;
     }
-
-    free(current_node);
-*/
+    *h_list = NULL;
 }
 
 void print_list(record *h_list)
@@ -136,7 +144,7 @@ void print_list(record *h_list)
         put_node(p_node);
 }
 
-int insert_node(record *h_list, record *p_node)
+int add_node(record *h_list, record *p_node)
 {
     record *prev_node, *current_node;
 
@@ -185,6 +193,7 @@ void delete_node(record *h_list, char *name)
 
     prev_node->next = current_node->next;
     free(current_node);
+    current_node = NULL;
 }
 
 record *get_node(void)
