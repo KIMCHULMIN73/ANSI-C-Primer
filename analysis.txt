@@ -1,27 +1,30 @@
 <C언어 초보자를 위해 만든 학습 예제들>
 
-1. memalloc.c [난이도 : 중상] - linked list, recursive call,HEAP memory allocation 과정
+1. memalloc.c [난이도 : 중상] - linked list, recursive call, HEAP memory allocation 활용
 
 2. dicegame.c [난이도 : 하] - 6면 짜리 주사위를 만들기
 
-3. randomnum.c [난이도 : 하] - 100면 짜리 주사위를 만들기 위해 realtime timer를 사용하여 난수를 발생시키는 과정
+3. randomnum.c [난이도 : 하] - 100면 짜리 주사위를 만들기 위해 realtime timer를 사용하여 난수 발생
 
-4. rainfall.c [난이도 : 중] - 외부 파일에서 읽은 문자열을 실수로 변환해 연산한 결과를 printf()서식으로 출력하는 과정
+4. rainfall.c [난이도 : 중] - 외부 파일에서 읽은 문자열을 실수로 변환해 연산한 결과를 printf()서식으로 출력
 
-5. atoi.c [난이도 : 하] - 표준 콘솔에서 문자열을 입력 받아 정수형으로 변환하는 과정
+5. atoi.c [난이도 : 하] - 표준 콘솔에서 문자열을 입력 받아 정수형으로 변환
 
-6. datastruct.c [난이도 : 중하] - structure type 변수를 정의하고 활용하는 사례
+6. datastruct.c [난이도 : 중하] - structure type 변수 정의 및 활용 사례
 
 7. examscore.c [난이도 : 하] - malloc을 이용해서 임의의 수의 시험 성적을 입력받아 최고점, 최저점, 평균 계산
 
-8. fileio.c [난이도 : 중] - FILE 구조체와 file i/o 함수를 이용해서 file-to-file 입출력 구현 과정
+8. fileio.c [난이도 : 중] - FILE 구조체와 file i/o 함수를 이용해서 file-to-file 입출력 구현
 
-9. guess.c [난이도 : 하] - srand() 함수 및 time() 함수를 이용해서 임의의 수를 생성하고 맞추는 게임 만들어 보기
+9. guess.c [난이도 : 하] - srand() 함수 및 time() 함수를 이용해서 임의의 수를 생성하고 맞추는 게임 만들기
 
 10. linklist.c [난이도 : 중상] - 메모리에 구조체 기반의 linked list를 생성하고 node를 add, delete하는 함수 구현
 
-11.
+11. looptest.c [난이도 : 하] - 기본 루프 구문 실습
 
+12. ptr_basic.c [난이도 : 하] - 포인터 기초 구문 실습
+
+13. ptr_advance.c [난이도 : 중] - 포인터  응용 구문 실습
 
 
 

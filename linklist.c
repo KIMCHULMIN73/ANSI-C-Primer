@@ -10,15 +10,6 @@
 
 #include "./usrlib.h"
 
-enum color { WHITE, RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET, BLACK, NO_COLOR = 99 };
-
-struct
-{
-    unsigned type:3;       // delcare prototype to use bit expression
-    unsigned trailer:3;
-    unsigned crc:2;
-} header;                  // This is just a example to learn 'C' syntax, so you had not better use external variables as this.
-
 typedef struct entity
 {
     char name[15];
@@ -43,10 +34,6 @@ void main(void)
     int num_of_node, i;
     record node;
     record *p_node, *h_list;
-
-    header.type = 0b000;
-    header.trailer = 0b000;
-    header.crc = 0b10;
 
     h_list = get_handle();
 
@@ -86,33 +73,44 @@ void main(void)
 
 record *get_handle(void)
 {
-    record *handle;
+    record *handle, *rv;
 
     handle = (record *)malloc(sizeof(record));
-    *(handle->name) = '\0';
-    handle->age = 0;
-    handle->height = 0;    
-    handle->next = NULL;
+    
+    if(handle == NULL)
+        rv = NULL;
+    else
+    {
+        *(handle->name) = '\0';
+        handle->age = 0;
+        handle->height = 0;    
+        handle->next = NULL;
+        rv = handle;
+    }
 
-    return handle;
+    return rv;
 }
 
 int make_list(record *h_list)
 {
+    int rv;
     record *p_node;
 
     if(h_list == NULL)
-        return FAIL;
+        rv = FAIL;
+    else
+    {
+        while(TRUE) 
+            if ((p_node = get_node()) == NULL)
+                exit(0);
+            else if (strcmp(p_node->name, "/quit") == 0)
+                break;
+            else
+                add_node(h_list, p_node);
+        rv = SUCCESS;
+    }
 
-    while(TRUE) 
-        if ((p_node = get_node()) == NULL)
-            exit(0);
-        else if (strcmp(p_node->name, "/quit") == 0)
-            break;
-        else
-            add_node(h_list, p_node);
-
-    return SUCCESS;
+    return rv;
 }
 
 void delete_list(record **h_list)
@@ -131,6 +129,8 @@ void delete_list(record **h_list)
         current_node = next_node;
     }
     *h_list = NULL;
+
+    return;
 }
 
 void print_list(record *h_list)
@@ -142,14 +142,17 @@ void print_list(record *h_list)
 
     for(p_node = h_list->next ; p_node != NULL ; p_node = p_node->next)
         put_node(p_node);
+
+    return;
 }
 
 int add_node(record *h_list, record *p_node)
 {
+    int rv;
     record *prev_node, *current_node;
 
     if((p_node == NULL) || (h_list == NULL))
-        return FAIL;
+        rv = FAIL;
     else
     {
         prev_node = h_list;
@@ -164,8 +167,10 @@ int add_node(record *h_list, record *p_node)
         prev_node->next = p_node;
         p_node->next = current_node;
 
-        return SUCCESS;
+        rv = SUCCESS;
     }
+
+    return rv;
 }
 
 void delete_node(record *h_list, char *name)
@@ -179,7 +184,8 @@ void delete_node(record *h_list, char *name)
     for(p_node = h_list->next ; p_node != NULL ; p_node = p_node->next)
     {
         offset++;
-        if (strcmp(p_node->name, name) == 0) break;
+        if (strcmp(p_node->name, name) == 0)
+            break;
     }
 
     prev_node = h_list;
@@ -194,6 +200,8 @@ void delete_node(record *h_list, char *name)
     prev_node->next = current_node->next;
     free(current_node);
     current_node = NULL;
+
+    return;
 }
 
 record *get_node(void)
@@ -211,17 +219,19 @@ record *get_node(void)
         flush_stdin();
 
         if ( strcmp(p_node->name, "/quit") == 0 )
-            return p_node;
-
-        printf("\nInput age : ");
-        scanf("%d", &(p_node->age));
-        flush_stdin();
-        printf("\nInput height : ");
-        scanf("%d", &(p_node->height));
-        flush_stdin();
-
-        return p_node;
+            ;
+        else
+        {
+            printf("\nInput age : ");
+            scanf("%d", &(p_node->age));
+            flush_stdin();
+            printf("\nInput height : ");
+            scanf("%d", &(p_node->height));
+            flush_stdin();
+        }
     }
+
+    return p_node;
 }
 
 void put_node(record *p_node)
@@ -230,4 +240,6 @@ void put_node(record *p_node)
         ;
     else
         printf("name : %s , age : %d , height : %d \n", p_node->name, p_node->age, p_node->height);
+
+    return;
 }

@@ -13,12 +13,26 @@
 #define YES	1
 #define NO	0
 
+enum color { WHITE, RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET, BLACK, NO_COLOR = 99 };
+
+struct
+{
+    unsigned type:3;       // delcare prototype to use bit expression
+    unsigned trailer:3;
+    unsigned crc:2;
+} header;                  // This is just a example to learn 'C' syntax, so you had not better use external variables as this.
+
 void main(void)
 {
     int ch, word;
 
     int numchar, numword, numline;
     
+    header.type = 0b000;
+    header.trailer = 0b000;
+    header.crc = 0b10;
+
+
     word = NO;
     numchar = numword = numline = 0;
     
