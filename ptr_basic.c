@@ -9,7 +9,6 @@
  ******************************************/
 
 #include "usrlib.h"
-#include <time.h>
 
 void main(void)
 {

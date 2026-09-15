@@ -8,82 +8,84 @@
  **          kimchulmin, 2026.4          **
  ******************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+#include "usrlib.h"
 
-#define FIRST    20
 #define NEXT     17
-
-#define LIMIT    15
+#define LIMIT    20
 
 void main(void)
 {
-    /* To test comma operation */
-    int ounces, cost;
-
-    printf("ounces        cost \n");
-    for (ounces=1, cost=FIRST ; ounces <= 16 ; ounces++, cost += NEXT)
-        printf("%6d     %7d\n", ounces, cost);
-
-    /* Zennon's arrow to test comma operation */	    
+    /* ZENNON'S ARROW with comma operation in for-loop */
+    char ch = '!';     
+    int a, b;
     int count;
+    int max_number, divisor, find_prime, prime_count;
     float sum, x;
 
-    for (sum=0.0, x=1.0, count=1 ; count <= LIMIT ; count++, x *= 2.0)
+    system("clear");
+    
+    for (sum=0.0, x=1.0, count=1 ; ; count++, x *= 2.0)
     {
         sum += 1.0/x;
-        printf("sum = %f when count = %d.\n", sum, count);
+        printf("sum = %.16f when count = %d\n", sum, count);
+        if(sum == 2)
+        {
+            printf("\nZENNON'S ARROW has arrived at the targt after %d attempts~!!\n", count);
+            break;
+        }
     }
 
-    /* To test do ~ while */
-    int a,b;
+    putchar('\n');
+
+    /* to test do ~ while */
 
     a = 0, b = 1;
 
     do
     {
         printf("%d + %d = ", a, b);
-        printf("%d\n", a += b);		    
+        printf("%d\n", a += b);  
     } while (b++ < LIMIT)
         ;
 
-    /* To test while in do ~ while */
-    char ch = '!';     
+    putchar('\n');
+
+    /* to test while in do ~ while */
 
     do
     {
-        count = 1;	
+        count = 1;
         while (count++ <= 7)
             printf("%c= %3d  ",ch, ch++);
         printf("\n");
     } while(ch <= '~')
         ;
 
-    /* To find All Prime Numbers */
-    int number, divisor, findprime;
-    int cnt = 1, primecnt = 0;
+    putchar('\n');
+
+    /* to find all Prime-Numbers under maximum number with nested for-loop */
 
     do
     {
+        count = 1;
+        prime_count = 0;
         printf("\n\nInput your number(>2) wanna find Prime Numbers in it : ");
-        scanf("%d", &number);		
-    } while (number < 2)
+        scanf("%d", &max_number);
+    } while (max_number < 2)
         ;
 
-    for (findprime = 2 ; findprime <= number ; findprime++)
+    for (find_prime = 2 ; find_prime <= max_number ; find_prime++)
     {
-        for (divisor = 2 ; findprime % divisor !=0 ; divisor ++)
+        for (divisor = 2 ; find_prime % divisor != 0 ; divisor ++)
             ;
 
-        if (findprime == divisor)
+        if (find_prime == divisor)
         {
-            printf("%6d ", findprime);
-            if (cnt++ % 10 == 0) printf("\n");
-            primecnt++;
+            printf("%6d ", find_prime);
+            if (count++ % 10 == 0) printf("\n");
+            prime_count++;
         }
     }
     printf("\n");
-    printf("Total Count of Prime numbers is %d in %d\n", primecnt, number); 
+    printf("Total Count of Prime numbers is %d in %d\n", prime_count, max_number); 
 }
