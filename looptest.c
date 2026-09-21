@@ -10,7 +10,6 @@
 
 #include "usrlib.h"
 
-#define NEXT     17
 #define LIMIT    20
 
 void main(void)
@@ -86,6 +85,5 @@ void main(void)
             prime_count++;
         }
     }
-    printf("\n");
-    printf("Total Count of Prime numbers is %d in %d\n", prime_count, max_number); 
+    printf("\nTotal Count of Prime numbers is %d in %d\n", prime_count, max_number); 
 }
