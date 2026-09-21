@@ -111,6 +111,25 @@ int main()
     char *strarray[] = { "My", "Name is", "Mustani Slav", "Rostro", "phobitchi", "3rd generation", "ultra super captiong computer" };
     
     strarraylen(strarray, sizeof strarray / sizeof *strarray); 
+    
+/* EXAMPLE 02 */
+#define REG_ADDR 0x40000000
+
+    unsigned int variable;
+    volatile unsigned int *cpu_register;
+
+    cpu_register = (volatile unsigned int *) REG_ADDR;
+
+    variable = 0b0000111100001111;
+    *cpu_register = 0b0000111100001111;
+    sleep(1);
+    variable = 0b1111000011110000;
+    *cpu_register = 0b1111000011110000;
+    sleep(1);
+    variable = 0b0101010101010101;
+    *cpu_register = 0b0101010101010101;
+
+
 }
 
 void strarraylen(char **str, int size)
