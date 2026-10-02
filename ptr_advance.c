@@ -3,22 +3,21 @@
  **              test c pointer          **
  **                                      **
  ******************************************
- **                 ptr.c                **
+ **             ptr_advance.c            **
  ******************************************
  **          kimchulmin, 2026.4          **
  ******************************************/
 #include "./usrlib.h"
 
-#define PR(X)         printf("pointer X = %u , value *X = %5d , double pointer &X = %u\n", X, *X, &X)
+#define PR(X)    printf("pointer X = %u , value *X = %5d , double pointer &X = %u\n", X, *X, &X)
 
 int main()
 {
-/////////////////////////////////////////////////////////////////////////
-
-    int *ptr1, *ptr2;                        // pointer variables to use 'PR(X)' macro
-    static int urn[] = {100, 200, 300};      // size of array 'urn' is 3
+/* EXAMPLE 01 */
+    int *ptr1, *ptr2;
+    static int urn[] = {100, 200, 300};    // size of array 'urn' is 3
     
-        ptr1 = urn; /* ptr1 = &urn[0] */
+    ptr1 = urn;    // is same to 'ptr1 = &urn[0]'
     ptr2 = &urn[2];  
 
     PR(ptr1);
@@ -28,53 +27,52 @@ int main()
     ++ptr2;
     PR(ptr2);
     
-    printf("ptr2 - ptr1 = %u\n\n\n", ptr2 - ptr1);
+    printf("\nptr2 - ptr1 = %u\n\n", ptr2 - ptr1);
 
 
-////////////////////////////////////////////////////////////////////////
+/* EXAMPLE 02 */
     int index, *ptr;
-
-    int array[4][3] = { {1,3,5} , {2,4,6} , {5,6,8} , {123,234,456} };
-    ptr = array[3];
+    int array[][] = { {1,3,5} , {2,4,6} , {5,6,8} , {123,234,456} };    // size of array 'array' is 4-by-3
+    int brray[] = {0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40};
+    
+    ptr = array[3];    //array[3] is name/pointer of array[3][0]
 
     for(index = 0 ; index < 3 ; index++)
-        printf("array[3][%d] = %d\n", index, *(ptr+index));
+        printf("array[3][%d] = %d\n", index, *(ptr+index));    // pointer operation is based on data-type
 
-    int brray[] = { 0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40 };
     ptr = brray;
-
-    for(index = 0 ; index < sizeof(brray) / sizeof(int) ; index++)
+    
+    for(index = 0 ; index < (sizeof(brray) / sizeof(int)) ; index++)
         *ptr += *(ptr+index);
-    printf("Total value is %d / %d\n",*ptr, brray[0]);
 
-    ///////////////////////////////////////////////////////////////////////////////
+    printf("Total value is %d / %d\n\n",*ptr, brray[0]);
 
-    char *chptr, crray[] = "AMIGO SIEMPRE";
-    int  drray[] = { 125, 255, 333, 450 };
-    long *lptr, erray[] = { 1122, 2333, 334454, 23453 };
+/* EXAMPLE 03 */
+    char *chptr, crray[] = "AMIGO SIEMPRE";    //crray is char array, initiated with string.
+    int  drray[] = {125, 255, 333, 450};
+    long *lptr, erray[] = {1122, 2333, 334454, 23453};
 
     index = 0;
     chptr = crray;
     while(*(chptr+index) != '\0')
     {
-        printf("crray[%2d] : *(0x%x) = %c\n", index, (chptr+index), *(chptr+index++));
+        printf("crray[%2d] : *(0x%x) = %c\n", index, (chptr+index), *(chptr+index));
+        index++;
     }
+
+    putchar('\n');
 
     index = 0;
     ptr = drray;
-    while(index < 4)
-    {
-        printf("drray[%2d] : *(0x%x) = %d\n", index, (ptr+index), *(ptr+index++));
-    }
-    
-    index = 0;
     lptr = erray;
     while(index < 4)
     {
-        printf("drray[%2d] : *(0x%x)  = %u\n", index, (lptr+index), *(lptr+index++));
+        printf("drray[%2d] : *(0x%x) = %d\n", index, (ptr+index), *(ptr+index));
+        printf("erray[%2d] : *(0x%x)  = %u\n", index, (lptr+index), *(lptr+index));
+        index++;
     }
 
-    ///////////////////////////////////////////////////////////////////////////////
+/* EXAMPLE 04 */
     char frray[] = "NIRVANA is one of my favorite pop singer.";
     void ptrn_frray(char *array, int size);
     
