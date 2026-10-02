@@ -3,7 +3,7 @@
  **            test C pointer            **
  **                                      **
  ******************************************
- **               pointer.c              **
+ **              ptr_basic.c             **
  ******************************************
  **          kimchulmin, 2026.4          **
  ******************************************/
@@ -29,13 +29,13 @@ void main(void)
 /* EXAMPLE 02 */
     long int val, *ptr, **pptr;
 
-    val = 324;
+    val = 12345;
     ptr = &val;
     pptr = &ptr;
 
     printf("val : %u , ptr : ox%x , pptr : ox%x\n", val, ptr, pptr);
 
-    **pptr += 25;
+    **pptr += 54321;
 
     printf("val : %u , &a : ox%x\n", val, &val);
     printf("*ptr : %u , ptr : ox%x , &ptr : ox%x\n", *ptr, ptr, &ptr);	

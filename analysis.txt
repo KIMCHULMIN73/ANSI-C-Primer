@@ -20,17 +20,19 @@
 
 10. linklist.c [난이도 : 중상] - 메모리에 구조체 기반의 linked list를 생성하고 node를 add, delete하는 함수 구현
 
-11. looptest.c [난이도 : 하] - 기본 루프 구문 실습
+11. looptest.c [난이도 : 하] - 기본 루프 구문 예시
 
-12. ptr_basic.c [난이도 : 하] - 포인터 기초 구문 실습
+12. ptr_basic.c [난이도 : 하] - 포인터의 기초적인 사용 예시
 
-13. ptr_advance.c [난이도 : 중] - 포인터  응용 구문 실습
+13. ptr_advance.c [난이도 : 중] - 포인터의 응용 예시
 
+14. readword.c [난이도 : 하] - stdin으로 부터 입력된 text로부터 단어 갯수 세기
 
+15. running.c [난이도 : 하] - 구조체(structure) 만들어보기 
 
+16. sortarray.c [난이도 : 중] - 정수 배열을 만들고, 오름차순 or 내림차순 정리
 
+17. string.c [난이도 : 중] - 문자열(string)의 기초적인 사용 예시
 
-
-
-99. usrlib.c / usrlib.h [난이도 : 중상] - 공통으로 사용 가능한 데이터 변환 및 I/O 기능을 library화 하는 과정 학습
+18. usrlib.c / usrlib.h [난이도 : 중상] - 공통으로 사용 가능한 데이터 변환 및 I/O 기능을 library화 하는 과정 학습
 
