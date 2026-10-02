@@ -24,7 +24,7 @@
 
 12. ptr_basic.c [난이도 : 하] - 포인터의 기초적인 사용 예시
 
-13. ptr_advance.c [난이도 : 중] - 포인터의 응용 예시
+13. ptr_advance.c [난이도 : 중상] - 포인터의 응용 예시
 
 14. readword.c [난이도 : 하] - stdin으로 부터 입력된 text로부터 단어 갯수 세기
 

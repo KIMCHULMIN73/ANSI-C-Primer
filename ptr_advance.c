@@ -32,7 +32,7 @@ int main()
 
 /* EXAMPLE 02 */
     int index, *ptr;
-    int array[][] = { {1,3,5} , {2,4,6} , {5,6,8} , {123,234,456} };    // size of array 'array' is 4-by-3
+    int array[][3] = { {1,3,5} , {2,4,6} , {5,6,8} , {123,234,456} };    // 'int array[4][]' and 'int array[][3]' are okay, but int array[][] is not allowed. why?
     int brray[] = {0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40};
     
     ptr = array[3];    //array[3] is name/pointer of array[3][0]
@@ -75,46 +75,35 @@ int main()
 /* EXAMPLE 04 */
     char frray[] = "NIRVANA is one of my favorite pop singer.";
     void ptrn_frray(char *array, int size);
-    
     ptrn_frray(frray, sizeof(frray)/sizeof(char));
 
-    ///////////////////////////////////////////////////////////////////////////////
     char grray[] = "REPUBLIC OF SOUTH KOREA IS NICK NAME OF NAMJOSEON";
     void ptrn_grray(char *array, int size);
-
     ptrn_grray(grray, sizeof(grray)/sizeof(char));
 
     char hrray[][4] = { {'A','B','C','D'}, {'E','F','G','H'}, {'I','J','K','L'} };
-    //void ptrn_hrray(char *array, int size);
-    void ptrn_hrray(char array[][4], int size);
-
+    void ptrn_hrray(char array[][4], int size);    // the expression 'char array[][4]' is same to 'char *array'
     ptrn_hrray(hrray, sizeof(hrray)/sizeof(char));
 
-    /////////////////////////////////////////////////////////////////////////////////
-    char *str = "KOREA is my mother nation.";
     int length;
-
+    char *str = "KOREA is my mother nation.";
     length = strlength(str);
     printf("\nLength of \'%s\'s is %d\n", str, length);
 
-    ///////////////////////////////////////////////////////////////////////////////
-    void ptrn_week(char **week, int size);
-
     char *week[] = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
-
+    void ptrn_week(char **week, int size);    // the 'char **week', parameter of ptrn_week, has same data type to above 'char *week[]', but, they are not same variable.
     ptrn_week(week, sizeof week / sizeof *week);
 
-    ///////////////////////////////////////////////////////////////////////////////    
     void strarraylen(char **str, int size);
     char *strarray[] = { "My", "Name is", "Mustani Slav", "Rostro", "phobitchi", "3rd generation", "ultra super captiong computer" };
-    
     strarraylen(strarray, sizeof strarray / sizeof *strarray); 
-    
-/* EXAMPLE 02 */
+
+
+/* EXAMPLE 05 */
 #define REG_ADDR 0x40000000
 
     unsigned int variable;
-    volatile unsigned int *cpu_register;
+    volatile unsigned int *cpu_register;    // what is difference between 'int a;' and 'volatile int a' ?
 
     cpu_register = (volatile unsigned int *) REG_ADDR;
 
@@ -126,8 +115,6 @@ int main()
     sleep(1);
     variable = 0b0101010101010101;
     *cpu_register = 0b0101010101010101;
-
-
 }
 
 void strarraylen(char **str, int size)
@@ -164,8 +151,7 @@ void ptrn_week(char **week, int size)
     printf("\n\n");
 }
 
-//void ptrn_hrray(char *array, int size)
-void ptrn_hrray(char (*array)[4], int size)
+void ptrn_hrray(char (*array)[4], int size)    // the expression 'char (*array)[4]' is same to 'char *array'
 {
     putchar('\n');
     for(int i = 0 ; i < size/4 ; i++)
