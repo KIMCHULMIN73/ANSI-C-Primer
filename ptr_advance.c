@@ -15,10 +15,10 @@ int main()
 {
 /* EXAMPLE 01 */
     int *ptr1, *ptr2;
-    static int urn[] = {100, 200, 300};    // size of array 'urn' is 3
+    static int hundreds[] = {100, 200, 300};    // size of array 'hundreds' is 3
     
-    ptr1 = urn;    // is same to 'ptr1 = &urn[0]'
-    ptr2 = &urn[2];  
+    ptr1 = hundreds;    // is same to 'ptr1 = &hundreds[0]'
+    ptr2 = &hundreds[2];  
 
     PR(ptr1);
     ptr1++;

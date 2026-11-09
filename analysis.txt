@@ -26,6 +26,10 @@
 
 13. ptr_advance.c [난이도 : 중상] - 포인터의 응용 예시
 
+
+
+
+
 14. readword.c [난이도 : 하] - stdin으로 부터 입력된 text로부터 단어 갯수 세기
 
 15. running.c [난이도 : 하] - 구조체(structure) 만들어보기 
