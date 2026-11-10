@@ -32,7 +32,7 @@ int main()
 
 /* EXAMPLE 02 */
     int index, *ptr;
-    int array[][3] = { {1,3,5} , {2,4,6} , {5,6,8} , {123,234,456} };    // 'int array[4][]' and 'int array[][3]' are okay, but int array[][] is not allowed. why?
+    int array[][3] = { {1,3,5} , {2,4,6} , {5,6,8} , {123,234,456} };    // int array[4][3] , int array[][3] are okay, but int array[4][] , int array[][] are not allowed. why?
     int brray[] = {0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40};
     
     ptr = array[3];    //array[3] is name/pointer of array[3][0]
@@ -45,7 +45,7 @@ int main()
     for(index = 0 ; index < (sizeof(brray) / sizeof(int)) ; index++)
         *ptr += *(ptr+index);
 
-    printf("Total value is %d / %d\n\n",*ptr, brray[0]);
+    printf("Total value is %d or %d or %d\n\n",*ptr, *brray, brray[0]);    // ptr == brray , so *ptr == *brray = brray[0]
 
 /* EXAMPLE 03 */
     char *chptr, crray[] = "AMIGO SIEMPRE";    //crray is char array, initiated with string.
@@ -77,12 +77,12 @@ int main()
     void ptrn_frray(char *array, int size);
     ptrn_frray(frray, sizeof(frray)/sizeof(char));
 
-    char grray[] = "REPUBLIC OF SOUTH KOREA IS NICK NAME OF NAMJOSEON";
+    char grray[] = "NAMJOSEON IS NICK NAME OF REPUBLIC OF SOUTH KOREA";
     void ptrn_grray(char *array, int size);
     ptrn_grray(grray, sizeof(grray)/sizeof(char));
 
     char hrray[][4] = { {'A','B','C','D'}, {'E','F','G','H'}, {'I','J','K','L'} };
-    void ptrn_hrray(char array[][4], int size);    // the expression 'char array[][4]' is same to 'char *array'
+    void ptrn_hrray(char array[][4], int size);    // the expression 'char array[][4]', 'char array[3][4]' , 'char *array' are all GOOD  but, array[3][] is NG
     ptrn_hrray(hrray, sizeof(hrray)/sizeof(char));
 
     int length;
@@ -92,11 +92,11 @@ int main()
 
     char *week[] = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
     void ptrn_week(char **week, int size);    // the 'char **week', parameter of ptrn_week, has same data type to above 'char *week[]', but, they are not same variable.
-    ptrn_week(week, sizeof week / sizeof *week);
+    ptrn_week(week, sizeof week / sizeof *week);    // size of pointer is 8 bytes
 
     void strarraylen(char **str, int size);
     char *strarray[] = { "My", "Name is", "Mustani Slav", "Rostro", "phobitchi", "3rd generation", "ultra super captiong computer" };
-    strarraylen(strarray, sizeof strarray / sizeof *strarray); 
+    strarraylen(strarray, sizeof strarray / sizeof *strarray);    // size of pointer is 8 bytes
 
 
 /* EXAMPLE 05 */
@@ -115,6 +115,41 @@ int main()
     sleep(1);
     variable = 0b0101010101010101;
     *cpu_register = 0b0101010101010101;
+}
+
+void ptrn_frray(char *array, int size)
+{
+    putchar('\n');
+    for(int index = 0 ; index < size ; index++)
+        putchar(array[index]);
+    putch('\n');
+    putchar('\n');
+}
+
+void ptrn_grray(char *array, int size)
+{
+    putchar('\n');
+
+    for(int i = 0 ; i < size ; i++)
+    {
+        for(int j = (size-i) ; j < size ; j++)
+            putchar(array[j-1]);
+            
+        putchar('\n');    // put 1 character
+    }
+
+    for(int i = size ; i >= 0 ; i--)
+        printf("%s\n", &array[i]);    // print 1 string, starting from &array[i]
+}
+
+void ptrn_hrray(char (*array)[4], int size)    // the expression 'char (*array)[4]' is same to 'char *array' or 'char array[][4]'
+{
+    putchar('\n');
+    for(int i = 0 ; i < size/4 ; i++)
+        for(int j = 0 ; j < size/3 ; j++)
+            putchar( *(*(array+i)+j) );    // is same to putchar(array[i][j]);
+            
+    putchar('\n');
 }
 
 void strarraylen(char **str, int size)
@@ -149,40 +184,4 @@ void ptrn_week(char **week, int size)
         printf("%c", *(*week + i));
 
     printf("\n\n");
-}
-
-void ptrn_hrray(char (*array)[4], int size)    // the expression 'char (*array)[4]' is same to 'char *array'
-{
-    putchar('\n');
-    for(int i = 0 ; i < size/4 ; i++)
-        for(int j = 0 ; j < size/3 ; j++)
-            //putchar(array[i*4+j]);
-            putchar(array[i][j]);
-
-    putchar('\n');
-}
-
-void ptrn_grray(char *array, int size)
-{
-    putchar('\n');
-
-    for(int i = 0 ; i < size ; i++)
-    {
-        for(int j = (size-i) ; j < size ; j++)
-            putchar(array[j-1]);
-            
-        putchar('\n');
-    }
-
-    for(int i = size ; i >= 0 ; i--)
-        printf("%s\n", &array[i]); 
-}
-
-void ptrn_frray(char *array, int size)
-{
-    putchar('\n');
-    for(int index = 0 ; index < size ; index++)
-        putchar(array[index]);
-    putch('\n');
-    putchar('\n');
 }
