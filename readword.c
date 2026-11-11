@@ -10,17 +10,24 @@
 
 #include "usrlib.h"
 
-#define YES	1
-#define NO	0
+#define YES    1
+#define NO     0
 
 enum color { WHITE, RED, ORANGE, YELLOW, GREEN, BLUE, VIOLET, BLACK, NO_COLOR = 99 };
 
 struct
 {
     unsigned type:3;       // delcare prototype to use bit expression
-    unsigned trailer:3;
+    unsigned payload:3;
     unsigned crc:2;
 } header;                  // This is just a example to learn 'C' syntax, so you had not better use external variables as this.
+
+typedef struct
+{
+    unsigned type:3;       // delcare prototype to use bit expression
+    unsigned payload:3;
+    unsigned crc:2;
+} trailer;                  // This is only prototype.
 
 void main(void)
 {
@@ -28,15 +35,20 @@ void main(void)
 
     int numchar, numword, numline;
     
+    trailer project_A;
+    
     header.type = 0b000;
-    header.trailer = 0b000;
+    header.payload = 0b000;
     header.crc = 0b10;
-
+    
+    project_A.type = 0b000;
+    project_A.payload = 0b000;
+    project_A.crc = 0b10;
 
     word = NO;
     numchar = numword = numline = 0;
     
-    while((ch = getchar()) != EOF)
+    while((ch = getchar()) != EOF)    // 'Ctrl+D' is EOF on linux console
     {
         numchar++;
 
