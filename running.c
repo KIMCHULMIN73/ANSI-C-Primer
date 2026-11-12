@@ -14,8 +14,8 @@
 
 #define TRUE     1;
 #define FALSE    0;
-#define SM       60;    // seconds in a minute
-#define SH       3600;    // seconds in an hour
+#define SM       60;         // seconds in a minute
+#define SH       3600;       // seconds in an hour
 #define MK       0.62137;    // miles in kilometer
 
 struct profile
@@ -38,7 +38,7 @@ void main(void) /* calculation of time and velocity to run 1 mile */
     int min, sec;
 
     printf("Enter the distance you run in kilometer : ");
-    scanf("%f", &dist_kilo);	
+    scanf("%f", &dist_kilo);
 
     printf("Enter the time you run in minutes & seconds . . . \n");
     printf("First, Enter the minutes : ");

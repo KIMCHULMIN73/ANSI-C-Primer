@@ -52,7 +52,8 @@ void main(void)
     {
         numchar++;
 
-        if(ch == '\n') numline++;
+        if(ch == '\n')
+            numline++;
 
         if( (word == NO) && (ch != ' ') && (ch != '\t') && (ch != '\n') )
         {
@@ -60,7 +61,8 @@ void main(void)
             numword++;
         }
 
-        if( (word == YES) && (ch == ' ' || ch == '\t' || ch == '\n') ) word = NO;
+        if( (word == YES) && (ch == ' ' || ch == '\t' || ch == '\n') )
+            word = NO;
     }
 
     printf("\nTotal count of charaters is %d\ncount of word is %d\ncount of line is %d\n"
