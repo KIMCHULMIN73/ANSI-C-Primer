@@ -23,7 +23,6 @@ void main (void)
     printf("Input the max size of integer array : ");
     getint(&size);
     pNumber = malloc(size);
-    printf("\n> ");
 
     size = getintarray(pNumber, size);
 

@@ -156,6 +156,8 @@ int getintarray(int pNumber[], int size)
     int index = 0;
     int num, result; 
 
+    printf("\n** Input %d integers**\n> ", size);
+
     while ( index < size && (result = getint(&num)) != STOP )
     {
         if (result == YES_NUM )
@@ -163,8 +165,6 @@ int getintarray(int pNumber[], int size)
             pNumber[index++] = num;
             printf ("\nInteger is %d\n", pNumber[index-1] );
         }
-        else if (result == YES_NUM )
-            printf ("\nNot integer\n");
         else
             printf ("\nInvalid Input.\n");
 
