@@ -41,6 +41,9 @@ void main (void)
         direction = 1;
 
     sort(pNumber, size, direction);
-    for(int i = 0 ; i < size ; i++) printf("%d    ",pNumber[i]);
+
+    for(int i = 0 ; i < size ; i++)
+        printf("%d    ",pNumber[i]);
+
     printf("\n");
 }

@@ -54,10 +54,7 @@ int getint(int *pint)
 
     intarray[index] = '\0';
 
-    if (ch == EOF)
-        return STOP;
-    else
-        return str2int(intarray, pint);
+    return str2int(intarray, pint);
 }
 
 int str2int(char string[], int *pint)
@@ -158,17 +155,18 @@ int getintarray(int pNumber[], int size)
 
     printf("\n** Input %d integers**\n> ", size);
 
-    while ( index < size && (result = getint(&num)) != STOP )
+    while ( index < size)
     {
-        if (result == YES_NUM )
-        {
-            pNumber[index++] = num;
-            printf ("\nInteger is %d\n", pNumber[index-1] );
-        }
-        else
-            printf ("\nInvalid Input.\n");
+       result = getint(&num);
+       if (result == YES_NUM )
+       {
+           pNumber[index++] = num;
+           printf ("\nInteger is %d\n", pNumber[index-1] );
+       }
+       else
+           printf ("\nInvalid Input.\n");
 
-        printf("\n> ");
+       printf("\n> ");
     }
 
     return index;
