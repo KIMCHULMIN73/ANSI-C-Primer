@@ -38,6 +38,8 @@
 #define TRUE          1
 
 #define LINLEN        81
+#define LIM           5
+
 
 struct numbers
 {
