@@ -7,11 +7,11 @@
 
 default: build
 
-build:		
-	gcc -o ./output/$(TARGET) $(DFLAGS) $(TARGET).c usrlib.c
+build:
+	gcc -o ./output/$(TARGET) $(OPTIONS) $(TARGET).c usrlib.c
 
 run:
-	script -q -c "./output/$(TARGET)" /dev/null
+	script -q -c "./output/$(TARGET) $(PARAMS)"
 
 clean:
 	rm ./output/$(TARGET)

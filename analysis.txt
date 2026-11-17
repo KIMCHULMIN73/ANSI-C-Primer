@@ -1,40 +1,38 @@
 <C언어 입문자들을 위해 만든 실습 예제들>
 
-1. memalloc.c [난이도 : 중상] - linked list, recursive call, HEAP memory allocation 활용
+1. looptest.c [난이도 : 하] - 기본 루프 구문 예시
 
-2. dicegame.c [난이도 : 하] - 6면 짜리 주사위를 만들기
+2. atoi.c [난이도 : 하] - 표준 콘솔에서 문자열을 입력 받아 정수형으로 변환
 
-3. randomnum.c [난이도 : 하] - 100면 짜리 주사위를 만들기 위해 realtime timer를 사용하여 난수 발생
+3. readword.c [난이도 : 하] - stdin으로 부터 입력된 text로부터 단어 갯수 세기
 
-4. rainfall.c [난이도 : 중] - 외부 파일에서 읽은 문자열을 실수로 변환해 연산한 결과를 printf()서식으로 출력
+4. running.c [난이도 : 하] - 구조체(structure) 만들어보기 
 
-5. atoi.c [난이도 : 하] - 표준 콘솔에서 문자열을 입력 받아 정수형으로 변환
+5. examscore.c [난이도 : 하] - malloc을 이용해서 임의의 수의 시험 성적을 입력받아 최고점, 최저점, 평균 계산
 
-6. datastruct.c [난이도 : 중하] - structure type 변수 정의 및 활용 사례
+6. guess.c [난이도 : 하] - srand() 함수 및 time() 함수를 이용해서 임의의 수를 생성하고 맞추는 게임 만들기
 
-7. examscore.c [난이도 : 하] - malloc을 이용해서 임의의 수의 시험 성적을 입력받아 최고점, 최저점, 평균 계산
+7. dicegame.c [난이도 : 하] - 6면 짜리 주사위를 만들기
 
-8. fileio.c [난이도 : 중] - FILE 구조체와 file i/o 함수를 이용해서 file-to-file 입출력 구현
+8. randomnum.c [난이도 : 하] - 100면 짜리 주사위를 만들기 위해 realtime timer를 사용하여 난수 발생
 
-9. guess.c [난이도 : 하] - srand() 함수 및 time() 함수를 이용해서 임의의 수를 생성하고 맞추는 게임 만들기
+9. ptr_basic.c [난이도 : 하] - 포인터의 기초적인 사용 예시
 
-10. linklist.c [난이도 : 중상] - 메모리에 구조체 기반의 linked list를 생성하고 node를 add, delete하는 함수 구현
+10. datastruct.c [난이도 : 중하] - structure type 변수 정의 및 활용 사례
 
-11. looptest.c [난이도 : 하] - 기본 루프 구문 예시
+11. sortarray.c [난이도 : 중하] - 정수 배열을 만들고, 오름차순 or 내림차순 정리
 
-12. ptr_basic.c [난이도 : 하] - 포인터의 기초적인 사용 예시
+12. rainfall.c [난이도 : 중] - 외부 파일에서 읽은 문자열을 실수로 변환해 연산한 결과를 printf()서식으로 출력
 
-13. ptr_advance.c [난이도 : 중상] - 포인터의 응용 예시
+13. string.c [난이도 : 중] - 문자열(string)의 기초적인 사용 예시
 
-14. readword.c [난이도 : 하] - stdin으로 부터 입력된 text로부터 단어 갯수 세기
+14. fileio.c [난이도 : 중] - FILE 구조체와 file i/o 함수를 이용해서 file-to-file 입출력 구현
 
-15. running.c [난이도 : 하] - 구조체(structure) 만들어보기 
+15. memalloc.c [난이도 : 중상] - linked list, recursive call, HEAP memory allocation 활용
 
-16. sortarray.c [난이도 : 중하] - 정수 배열을 만들고, 오름차순 or 내림차순 정리
+16. ptr_advance.c [난이도 : 중상] - 포인터의 응용 예시
 
-17. string.c [난이도 : 중하] - 문자열(string)의 기초적인 사용 예시
-
-
+17. linklist.c [난이도 : 중상] - 메모리에 구조체 기반의 linked list를 생성하고 node를 add, delete하는 함수 구현
 
 18. usrlib.c / usrlib.h [난이도 : 중상] - 공통으로 사용 가능한 데이터 변환 및 I/O 기능을 library화 하는 과정 학습
 

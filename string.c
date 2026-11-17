@@ -21,8 +21,6 @@ int main(argc, argv)
 int argc;
 char* argv[]; 
 {
-#ifdef STR_EXAM
-
 /* EXAMPLE 01 */
     char name[LINLEN];
     static char talents[LINLEN];
@@ -85,20 +83,6 @@ char* argv[];
     puts(flower);
 
 /* EXAMPLE 03 */
-    char *ptr2;
-    ptr2 = malloc(LINLEN);
-
-    puts("\nI'm a cyber parrot so I can say what you can say. Input anything");
-    while(*ptr2 != EOF)
-    {
-        putch('>');
-        fgets(ptr2, LINLEN, stdin);
-        puts(ptr2);
-    }
-
-#else
-
-/* EXAMPLE 04 */
 
     #define HALT    ""
 
@@ -106,13 +90,13 @@ char* argv[];
     char *ptstr[LIM];
     int ct = 0;
 
-    printf ("%s, \n", argv[0]);
+    printf ("argv[0] : %s, \n", argv[0]);    // argv[0] is name of this program
 
     for ( ct = 0 ; ct < argc ; ct++)
     {
-        if (argv[ct][0] == '-')
-        {
-            switch (argv[ct][1])
+        if (argv[ct][0] == '-')     // argv[1] ~ argv[argc-1] are addtional parameters(strings)
+        {                           // argv[n][0] : first character of argv[n]
+            switch (argv[ct][1])    // argv[n][1] : second character of argv[n]
             {
                 case 'r' : printf ("%s \n", "reverse"); break;
                 case 'b' : printf ("%s \n", "break"); break;
@@ -127,19 +111,35 @@ char* argv[];
 
     ct = 0;
 
-    printf("If you input Max. %d sentence, I will sort them.\n To stop, you can hit [ENTER] key.\n", LIM);
+    printf("If you input Max. %d sentence, I will sort them.\n", LIM);
 
-    while ( fgets(input[ct], MAX_LENGTH, stdin) != NULL && strcmp(input[ct], HALT) != 0 && ++ct < LIM)
+    while ( ct<LIM && fgets(input[ct], MAX_LENGTH, stdin)!=NULL && strcmp(input[ct], HALT)!=0 )
+    {
         ptstr[ct] = input[ct];
-
-    //sortstring(ptstr, ct++);
-    sortstringbystrcpy(input, ct);
+        ct++;
+    }
+    sortstring(ptstr, ct);
+    //sortstringbystrcpy(input, ct);
 
     printf("\n\nThe result of sorting sentence is as below.\n");
-    for ( ct = 0; ct < LIM ; ct++)
-        //puts(ptstr[ct]);
-        puts(input[ct]);
-#endif
+    for ( ct = 0; ct < LIM ; ct)
+    {
+        puts(ptstr[ct]);
+        //puts(input[ct]);
+        ct++;
+    }
+
+/* EXAMPLE 04 */
+    char *ptr2;
+    ptr2 = malloc(LINLEN);
+
+    puts("\nI'm a cyber parrot so I can say what you can say. Input anything");
+    while(*ptr2 != EOF)
+    {
+        putch('>');
+        fgets(ptr2, LINLEN, stdin);
+        puts(ptr2);
+    }
 
     return SUCCESS;
 }
