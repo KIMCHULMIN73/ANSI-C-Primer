@@ -10,32 +10,32 @@
 
 #include "./usrlib.h"
 
-int getch(void)    // input 1 character without ENTER key (carriage return)
+int getch(void)    // get one character without ENTER key
 {
     int ch;
-    struct termios old;
-    struct termios current;
+    struct termios previous, current;
 
-    tcgetattr(0, &old);
+    tcgetattr(0, &previous);    // get attribute of terminal cofiguration into previous
+    current = previous;         // save previous into current
 
-    current = old;
-    current.c_lflag &= ~(ICANON|ECHO);
-    current.c_cc[VMIN] = 1;
-    current.c_cc[VTIME] = 0;
+    current.c_lflag &= ~(ICANON|ECHO);     // to get one character without ENTER key and ECHO
+    current.c_cc[VMIN] = 1;                // the amount of data received at once
+    current.c_cc[VTIME] = 0;               // time interval between data received at once
+    tcsetattr(0, TCSAFLUSH, &current);     // set attribute of terminal cofiguration with current
 
-    tcsetattr(0, TCSAFLUSH, &current);
-    ch = getchar();
-    tcsetattr(0, TCSAFLUSH, &old);
+    ch = getchar();                        // getchar() is standard I/O function of ANSI C
+
+    tcsetattr(0, TCSAFLUSH, &previous);    // restore attribute of terminal cofiguration with previous
 
     return ch;
 }
 
-void putch(char ch)
+void putch(char ch)    // exactly the same as putchar()
 {
     putchar(ch);
 }
 
-int getint(int *pint)
+int getint(int *pint)    // get a integer value from console(standard input)
 {
     char intarray[INT_LENGTH];
     int ch, index = 0;
