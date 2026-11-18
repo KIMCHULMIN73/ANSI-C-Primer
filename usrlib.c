@@ -57,7 +57,7 @@ int getint(int *pint)    // get a integer value from console(standard input)
     return str2int(intarray, pint);
 }
 
-int str2int(char string[], int *pint)
+int str2int(char string[], int *pint)    // convert string to interger
 {
     int index = 0, sign = 1;
 
