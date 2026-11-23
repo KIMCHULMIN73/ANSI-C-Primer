@@ -10,7 +10,7 @@
 
 #include "./usrlib.h"
 
-int getch(void)    // get one character without ENTER key
+int getch(void)    // function to get one character without ENTER key from console(standard-input)
 {
     int ch;
     struct termios previous, current;
@@ -35,7 +35,7 @@ void putch(char ch)    // exactly the same as putchar()
     putchar(ch);
 }
 
-int getint(int *pint)    // get a integer value from console(standard input)
+int getint(int *pint)    // function to get a integer value from console(standard input)
 {
     int ch, index = 0;
     char intarray[INT_LENGTH];
@@ -57,7 +57,7 @@ int getint(int *pint)    // get a integer value from console(standard input)
     return str2int(intarray, pint);
 }
 
-int str2int(char string[], int *pint)    // convert string to integer
+int str2int(char string[], int *pint)    // function to convert string to integer
 {
     int index = 0, sign = 1;
 
@@ -78,15 +78,18 @@ int str2int(char string[], int *pint)    // convert string to integer
         return NO_NUM;
 }
 
-int int2str(int number, char* num_str)    // convert integer to string
+int int2str(int number, char* num_str)    // function to convert integer to string
 {
-    int i = 0, pwr = 1;
+    int i, pwr;
+    float num;
     char temp_ch[STR_LENGTH];
-    float num = (float)number;
 
-    while( (int)(num/pwr) > (float)((1/3)*3) )
+    i = 0, pwr = 1;
+    num = (float)number;
+
+    while( (int)(num/pwr) > (float)(1/3)*3 )    // this routine executes until 1 > 0.9999...
     {
-        temp_ch[i++] = '0' + (int)num % (pwr*10) / pwr;
+        temp_ch[i++] = '0' + (int)(((int)num % (pwr*10)) / pwr);
         pwr *= 10;
     }
 
@@ -98,7 +101,7 @@ int int2str(int number, char* num_str)    // convert integer to string
     return SUCCESS;
 }
 
-void getstring(FILE *file, char string[])
+void getstring(FILE *file, char string[])    // function to get string from external file
 {
     int ch, index = 0;
 
@@ -107,7 +110,7 @@ void getstring(FILE *file, char string[])
     string[index] = '\0';
 }
 
-int getstr(FILE *file, char *string)
+int getstr(FILE *file, char *string)    // function to get string from external file (this function is the same as getstring())
 {
     int cond = TRUE;
 
@@ -123,7 +126,7 @@ int getstr(FILE *file, char *string)
     return SUCCESS;
 }
 
-int putstr(FILE *file, char *string)
+int putstr(FILE *file, char *string)    // function to put string to external file
 {
     while( *(string) != '\0' )
         putc(*string++, file);
@@ -133,20 +136,20 @@ int putstr(FILE *file, char *string)
     return SUCCESS;
 }
 
-int strlength(char sl[])
+int strlength(char sl[])    // function to get string length
 {
-    int charnum = 0;
+    int strlen = 0;
     char *strptr;
 
     strptr = sl;
 
     while(*sl++ != '\0')
-        charnum++;
+        strlen++;
 
-    return charnum;
+    return strlen;
 }
 
-int getintarray(int pNumber[], int size)
+int getintarray(int pNumber[], int size)    // function to get array of integers
 {
     int index = 0;
     int num, result; 
@@ -170,10 +173,11 @@ int getintarray(int pNumber[], int size)
     return index;
 }
 
-void str2intarray(char string[], int integer[])
+void str2intarray(char string[], int integer[])    // function to convert string to array of integers
 {
-    int ind_str = 0, ind_int = 0;
     int sign = 1;
+    int ind_str = 0, ind_int = 0;
+
     while(string[ind_str] != '\0')
     {
         if( string[ind_str] == '\n' || string[ind_str] == ' ' || string[ind_str] == '\t' || string[ind_str] == '.' )
@@ -197,16 +201,17 @@ void str2intarray(char string[], int integer[])
             }
 
             integer[ind_int] = sign * integer[ind_int];
-            //printf("Integer[%d] =  %d\n", ind_int, integer[ind_int]);
+
             ind_int++;
         }
     }
 }
 
-void str2floatarray(char string[], float floatarray[])
+void str2floatarray(char string[], float floatarray[])    // function to convert string to array of float numbers
 {
-    int ind_str = 0, ind_float = 0, ptrflag, underptr, decimal;
     int sign = 1;
+    int ind_str = 0, ind_float = 0;
+    int ptrflag, underptr, decimal;
 
     while(string[ind_str] != '\0')
     {
