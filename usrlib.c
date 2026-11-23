@@ -37,10 +37,10 @@ void putch(char ch)    // exactly the same as putchar()
 
 int getint(int *pint)    // get a integer value from console(standard input)
 {
-    char intarray[INT_LENGTH];
     int ch, index = 0;
+    char intarray[INT_LENGTH];
 
-    while(1)
+    while(TRUE)
     {
         ch = getch();
 
@@ -57,19 +57,17 @@ int getint(int *pint)    // get a integer value from console(standard input)
     return str2int(intarray, pint);
 }
 
-int str2int(char string[], int *pint)    // convert string to interger
+int str2int(char string[], int *pint)    // convert string to integer
 {
     int index = 0, sign = 1;
+
+    *pint = 0;
 
     if( string[index] == '+' || string[index] == '-')
         sign = (string[index++] == '+') ? 1 : -1;
 
-    *pint = 0;
-
     while( '0' <= string[index] && string[index] <= '9' )
-    {
         *pint = 10 * (*pint) + (string[index++] - '0');
-    }
 
     if( index != 0 && string[index] == '\0' )
     {
@@ -80,11 +78,11 @@ int str2int(char string[], int *pint)    // convert string to interger
         return NO_NUM;
 }
 
-int int2str(int number, char* num_str)
+int int2str(int number, char* num_str)    // convert integer to string
 {
-    float num = (float)number;
     int i = 0, pwr = 1;
-    char temp_ch[256];
+    char temp_ch[STR_LENGTH];
+    float num = (float)number;
 
     while( (int)(num/pwr) > (float)((1/3)*3) )
     {
