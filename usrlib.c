@@ -249,13 +249,13 @@ void str2floatarray(char string[], float floatarray[])    // function to convert
             for(int i = 0; i < underptr ; i++) decimal *= 10;
 
             floatarray[ind_float] = sign * floatarray[ind_float] / decimal;
-            //printf("Float[%d] =  %f\n", ind_float, floatarray[ind_float]);
+
             ind_float++;
         }
     }
 }
 
-void sort(int pNumber[], int size, int direction)
+void sort(int pNumber[], int size, int direction)    // function to sort multiple integers in ascending or descending order
 {
     int i, j;
 
