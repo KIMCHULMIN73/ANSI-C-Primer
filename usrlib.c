@@ -275,7 +275,7 @@ void sort(int pNumber[], int size, int direction)    // function to sort multipl
         }      
 }
 
-void swapbypointer(int *x, int *y)
+void swapbypointer(int *x, int *y)    // function to swap position between two integers with poiter operation
 {
     int temp;
 
@@ -284,7 +284,7 @@ void swapbypointer(int *x, int *y)
     *y = temp;
 }
 
-struct numbers swapbystructure(int x, int y)
+struct numbers swapbystructure(int x, int y)    // function to swap position between two integers with structure(returning data)
 {
     int temp;
     struct numbers num;
@@ -299,28 +299,28 @@ struct numbers swapbystructure(int x, int y)
     return num;
 }
 
-int mean(int values[], int number)
+int mean(int values[], int number)    // function to get mean of some integers
 {
     int index;
     long sum;
 
     if (number <= 0)
     {
-        printf("ERR : Invalid array index. \n");
+        printf("\nERR : Invalid array index. \n");
         return FAIL;
     }
     else
     {
         for(index = 0, sum = 0 ; index < number ; index++)
         {
-            sum += *(values+index);			
+            sum += *(values+index);    // operation to calculate total sum of each integer by pointer expression  
         }
         
         return (int)(sum / number);
     }
 }
 
-void sortstring(char *input[], int ct)
+void sortstring(char *input[], int ct)    // function to sort string by swaping. 'char *input[]' is the same as 'char **input'
 {
     char *temp;
     int x, y;
@@ -329,40 +329,35 @@ void sortstring(char *input[], int ct)
         for ( y = (x+1) ; y < ct ; y++)
             if ( strcmp(input[x], input[y]) > 0)
             {
-                temp = input[x];
+                temp = input[x];    // swap pointer instead string
                 input[x] = input[y];
                 input[y] = temp;
             }
 }
 
-void sortstringbystrcpy(char (*input)[LINLEN], int ct)
+void sortstringbystrcpy(char (*input)[LINLEN], int ct)    // function to sort string by strcpy() function. 'char (*input)[LINLEN]' is the same as 'char input[][LINLEN]'
 //void sortstringbystrcpy(char *input, int ct)
 {
     char temp[LINLEN];
     int x, y;
 
-    //printf("\nInput Result\n");
-    //for ( x = 0; x < LIM ; x++)
-    //puts(input[x]);
-    //puts(&input[x*LINLEN]);
-
     for ( x = 0 ; x < (ct-1) ; x++)
         for ( y = (x+1) ; y < ct ; y++)
             if ( strcmp(input[x], input[y]) > 0)
             {
-                strcpy(temp, input[x]);
+                strcpy(temp, input[x]);    // why use strcpy() instead of swaping?
                 strcpy(input[x], input[y]);
                 strcpy(input[y], temp);
             }
-            //if ( strcmp(&input[x*LINLEN], &input[y*LINLEN]) > 0)
+            //if ( strcmp(&input[x*LINLEN], &input[y*LINLEN]) > 0)    // '&input[x*LINLEN]' and 'input+(x*LINLEN)' are the same
             //{
-            //	strcpy(temp, &input[x*LINLEN]);
-            //	strcpy(&input[x*LINLEN], &input[y*LINLEN]);
-            //	strcpy(&input[y*LINLEN], temp);
+            //    strcpy(temp, &input[x*LINLEN]);
+            //    strcpy(&input[x*LINLEN], &input[y*LINLEN]);
+            //    strcpy(&input[y*LINLEN], temp);
             //}
 }
 
-void flush_stdin(void)
+void flush_stdin(void)    // function  to flush console()
 {
     int c;
     while ((c=getchar()) != '\n' && c != EOF)
