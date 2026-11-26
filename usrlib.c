@@ -329,7 +329,7 @@ void sortstring(char *input[], int ct)    // function to sort string by swaping.
         for ( y = (x+1) ; y < ct ; y++)
             if ( strcmp(input[x], input[y]) > 0)
             {
-                temp = input[x];    // swap pointer instead string
+                temp = input[x];    // to swap pointer(start point of string) instead string itself
                 input[x] = input[y];
                 input[y] = temp;
             }
@@ -345,7 +345,7 @@ void sortstringbystrcpy(char (*input)[LINLEN], int ct)    // function to sort st
         for ( y = (x+1) ; y < ct ; y++)
             if ( strcmp(input[x], input[y]) > 0)
             {
-                strcpy(temp, input[x]);    // why use strcpy() instead of swaping?
+                strcpy(temp, input[x]);    // why use strcpy() instead of swaping directly?
                 strcpy(input[x], input[y]);
                 strcpy(input[y], temp);
             }
